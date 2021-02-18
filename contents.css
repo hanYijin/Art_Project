@@ -9,15 +9,30 @@
     width: 750px;
     float: left;
 }
-#contents>#main_aside{
-    width: 200px;
-    float: right;
-}
+
 #main_section>article.main_article{
     margin-bottom: 10px;
     padding: 20px;
-    border:2px solid #F2DF80;
+    border:2px solid whitesmoke;
+    border-radius: 5px;
 }
+.red{
+    color: #A63247;
+    font-size: 46px;
+}
+.yellow{
+    color:#F2DF80;
+    font-size: 40px;
+}
+#main_section>article.main_article>h1{
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+#main_section>article.main_article>h2{
+    margin-top: 20px;
+    font-family: '본문';
+}
+#main_section>article.main_article>p{margin-top: 20px;}
 #main_section>article.main_article>img{
     width: 700px;
     margin-left: 5px;
@@ -52,7 +67,7 @@ section.buttons>label{
     text-align: center;
 
     box-sizing: border-box;
-    border: 1px solid #3B9ABF;
+    border: 1px solid whitesmoke;
    
     background:white;
     color:  #3B9ABF;
