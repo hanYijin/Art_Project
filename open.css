@@ -38,4 +38,5 @@
     font-family: '본문';
     font-size: 32px;
 }
-p{margin-top: 28px;}
+p{margin-top: 28px;
+line-height: 28px;}
