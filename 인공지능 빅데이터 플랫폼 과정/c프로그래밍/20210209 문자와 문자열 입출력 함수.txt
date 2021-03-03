@@ -1,0 +1,74 @@
+문자 입출력 프로그램
+
+#include<stdio.h>
+
+void main() {
+	int ch;
+	while (1)
+	{
+		ch = getchar();
+		if (ch == EOF)
+			break;//ctrl+Z 입력하면 반복 중지
+		putchar(ch);
+	}
+}
+___________________________________________________________________________________
+문자열 
+#include<stdio.h>
+
+int main(void)
+{
+	char perId[7];
+	char name[10];
+
+	fputs("주민번호 앞 6자리 입력: ", stdout);
+	fgets(perId, sizeof(perId), stdin);
+	// 입력 버퍼를 지워야 한다.
+	fflush(stdin);
+
+	fputs("이름 입력: ", stdout);
+	fgets(name, sizeof(name), stdin);
+
+	printf("주민번호: %s \n", perId);
+	printf("이름: %S \n", name);
+}
+______________________________________________________________
+#include<stdio.h>
+
+int main(void)
+{
+	char perId[7];
+	char name[10];
+
+	fputs("주민번호 앞 6자리 입력: ", stdout);
+	fgets(perId, sizeof(perId), stdin);
+	// 입력 버퍼를 지워야 한다.
+	//fflush(stdin);
+
+	while (getchar() != 'n');
+
+	fputs("이름 입력: ", stdout);
+	fgets(name, sizeof(name), stdin);
+
+	printf("주민번호: %s \n", perId);
+	printf("이름: %S \n", name);
+}
+_____________________________________________________________________
+atoi(), atof()
+#include<stdio.h>
+#include <stdlib.h>
+
+
+int main(void)
+{
+
+	char a[10] = "1234";
+
+	int b = atoi(a);
+	double c = atof(a);
+
+	printf("b= %d\n", b);
+	printf("c= %f", c);
+}
+b= 1234
+c= 1234.000000

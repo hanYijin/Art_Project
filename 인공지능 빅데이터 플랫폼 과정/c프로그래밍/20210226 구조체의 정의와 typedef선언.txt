@@ -1,0 +1,302 @@
+20210216 
+구조체의 정의와 typedef 선언
+typedef int INT;
+typedef int* PTR_INT;
+typedef unsigned int UINT;
+typedef unsigned int* PTR_UINT;
+
+typedef unsigned char UCHAR;
+typedef unsigned char* PTR_UCHAR;
+
+void main()
+{
+	INT num1 = 10;
+	PTR_INT pnum1 = &num1;
+
+	UINT num2 = 20;
+	PTR_UINT pnum2 = &num2;
+
+	UCHAR ch = 'A';
+	PTR_UCHAR pch = &ch;
+
+	printf("num1= %d\n", num1);
+	printf("pnum1= %d\n", *pnum1);
+
+	printf("num2= %d\n", num2);
+	printf("pnum2= %d\n", *pnum2);
+
+	printf("ch= %c\n", ch);
+	printf("pch= %c\n", *pch);
+}
+
+num1= 10
+pnum1= 10
+num2= 20
+pnum2= 20
+ch= A
+pch= A
+__________________________________________________________________________
+struct point
+{
+	int xpos;
+	int ypos;
+};
+typedef struct point point;
+
+typedef struct person
+{
+	char name[20];
+	char phoneNum[20];
+	int age;
+}person;
+
+void main()
+{
+	point pos = { 10,20 };
+	person man = { "hanyijin", "010-9982-7993", 26 };
+	printf("pos.Xpos= %d pos.ypos= %d\n", pos.xpos, pos.ypos);
+	printf("man.name= %s man.phoneNum= %s man.age= %d \n", man.name, man.phoneNum, man.age);
+}
+
+pos.Xpos= 10 pos.ypos= 20
+man.name= hanyijin man.phoneNum= 010-9982-7993 man.age= 26
+____________________________________________________________________________________________________________________________
+typedef struct point
+{
+	int xpos;
+	int ypos;
+}point;
+
+void showPoint(point pos)
+{
+	printf("pos.xpos = %d pos.ypos = %d \n", pos.xpos, pos.ypos);
+}
+point makePoint()
+{
+	point pos;
+	printf("xpos= "); scanf("%d", &pos.xpos);
+	printf("ypos= "); scanf("%d", &pos.ypos);
+	return pos;
+}
+
+
+void main()
+{
+	point cpos = makePoint();
+	showPoint(cpos);
+	return 0;
+}
+
+xpos= 2
+ypos= 4
+pos.xpos = 2 pos.ypos = 4
+________________________________________________________________________________________________
+
+typedef struct 
+{
+	int xpos;
+	int ypos;
+}point;
+//원점 대칭함수
+void doChange(point* ptr)
+{
+	ptr->xpos = (ptr->xpos) * -1;
+	ptr->ypos = (ptr->ypos) * -1;
+}
+//출력함수
+void doPrint(point pos)
+{
+	printf("pos.xpos = %d pos.ypos = %d \n", pos.xpos, pos.ypos);
+	
+}
+void main()
+{
+	point pos = { 10,-5 };
+	doChange(&pos);
+	doPrint(pos);
+
+	return 0;
+}
+
+pos.xpos = -10 pos.ypos = 5
+_________________________________________________________________________________________________________
+#include <stdio.h>
+#include <stdlib.h>
+#include<time.h>
+#pragma warning (disable: 4996)
+typedef struct 
+{
+	int xpos;
+	int ypos;
+}point;
+//원점 대칭함수
+void doChange(point* ptr)
+{
+	ptr->xpos = (ptr->xpos) * -1;
+	ptr->ypos = (ptr->ypos) * -1;
+}
+//출력함수
+void doPrint(point pos)
+{
+	printf("pos.xpos = %d pos.ypos = %d \n", pos.xpos, pos.ypos);
+	pos.xpos = 20;
+	printf("doprint pos--------------------\n");
+	printf("pos.xpos = %d pos.ypos = %d \n", pos.xpos, pos.ypos);
+	
+}
+void main()
+{
+	point pos = { 10,-5 };
+	doChange(&pos);
+	doPrint(pos);
+	printf("----------------------main-----------------\n");
+	printf("pos.xpos = %d pos.ypos = %d \n", pos.xpos, pos.ypos);
+
+	return 0;
+}
+pos.xpos = -10 pos.ypos = 5
+doprint pos--------------------
+pos.xpos = 20 pos.ypos = 5
+----------------------main-----------------
+pos.xpos = -10 pos.ypos = 5
+
+___________________________________________________________________________________________________
+
+typedef struct 
+{
+	int xpos;
+	int ypos;
+}point;
+
+
+void main()
+{
+	point p1 = { 10,20 };
+	point p2 = p1;
+
+	printf("p1.xpos = %d, p1.ypos = %d \n", p1.xpos, p1.ypos);
+	printf("p2.xpos = %d, p2.ypos = %d \n\n", p2.xpos, p2.ypos);
+	
+	p1.xpos = 30;
+	
+	printf("p1.xpos = %d, p1.ypos = %d \n", p1.xpos, p1.ypos);
+	printf("p2.xpos = %d, p2.ypos = %d \n", p2.xpos, p2.ypos);
+	
+	return 0;
+}
+
+p1.xpos = 10, p1.ypos = 20
+p2.xpos = 10, p2.ypos = 20
+
+p1.xpos = 30, p1.ypos = 20
+p2.xpos = 10, p2.ypos = 20
+___________________________________________________________________________________________________
+문제 23-1
+
+#include <stdio.h>
+#pragma warning (disable: 4996)
+
+typedef struct point
+{
+	int xpos;
+	int ypos;
+}point;
+
+void swapPoint(point* ptr1, point *ptr2)
+{
+	point temp = { 0,0 };
+	temp = *ptr1;
+	*ptr1 = *ptr2;
+	*ptr2 = temp;
+}
+void posPirnt(point *pos1, point *pos2)
+{
+	printf("pos1.xpos = %d pos1.ypos= %d\n", pos1->xpos, pos1->ypos);
+	printf("pos2.xpos = %d pos2.ypos= %d\n", pos2->xpos, pos2->ypos);
+}
+int main()
+{
+	point pos1 = { 2,4 };
+	point pos2 = { 5,7 };
+
+	swapPoint(&pos1, &pos2);
+	posPirnt(&pos1, &pos2);
+
+	return 0;
+}
+
+pos1.xpos = 5 pos1.ypos= 7
+pos2.xpos = 2 pos2.ypos= 4
+___________________________________________________________________________________________________
+문제 23-2
+typedef struct point
+{
+	int xpos;
+	int ypos;
+}point;
+
+typedef struct Rectangle
+{
+	point pos1;
+	point pos2;
+}Rectangle;
+
+void Area(Rectangle rec)
+{
+	int b = rec.pos2.xpos - rec.pos1.xpos;
+	int h = rec.pos2.ypos - rec.pos1.ypos;
+	printf("좌표평면상의 직사각형 넓이 = %d\n", b * h);
+}
+void pointPrint(Rectangle rec)
+{
+	printf("좌 상단: [%d %d]\n", rec.pos1.xpos, rec.pos2.ypos);
+	printf("좌 하단: [%d %d]\n", rec.pos1.xpos, rec.pos1.ypos);
+	printf("우 상단: [%d %d]\n", rec.pos2.xpos, rec.pos2.ypos);
+	printf("우 하단: [%d %d]\n", rec.pos2.xpos, rec.pos1.ypos);
+}
+int main()
+{
+	Rectangle rec = { {0,0},{100,100} };
+	Area(rec);
+	pointPrint(rec);
+	Rectangle rec1 = { {1,1},{4,4} };
+	Area(rec1);
+	pointPrint(rec1);
+
+	return 0;
+___________________________________________________________________________
+공용체
+typedef struct
+{
+	int mem1;
+	int mem2;
+	double mem3;
+}SBOX;
+
+typedef union
+{
+	int mem1;
+	int mem2;
+	double mem3;
+}UBOX;
+
+void main()
+{
+	SBOX sb;
+	UBOX ub;
+
+	sb.mem1 = 10; sb.mem2 = 20; sb.mem3 = 30.4;
+	printf("%d %d %g \n", sb.mem1, sb.mem2, sb.mem3);
+
+	ub.mem1 = 10; ub.mem2 = 20; ub.mem3 = 30.4;
+	printf("%d %d %g", ub.mem1, ub.mem2, ub.mem3);
+
+}
+10 20 30.4
+1717986918 1717986918 30.4
+__________________________________________________________________________________
+열거형
+
+
+
+

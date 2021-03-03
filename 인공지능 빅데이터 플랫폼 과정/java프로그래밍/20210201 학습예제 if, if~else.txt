@@ -1,0 +1,339 @@
+2021/02/01
+java 
+정수 입력 받고 연산 결과 출력
+입력 기능 + if~else문 사용
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+public class Ex03 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		Scanner scan = new Scanner(System.in);
+		BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+		
+		System.out.println("a 숫자 입력: ");
+		int a = scan.nextInt();
+		System.out.println("b 숫자 입력: ");
+		int b = Integer.parseInt(br.readLine());
+		
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+		
+		if(a>b){
+			System.out.println("a-b= "+(a-b));
+		}else{
+			System.out.println("b-a= "+(b-a));
+		}
+	}
+
+}
+______________________________________________________________________________________________________________
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+//c언어 p.189 문제 3번
+public class Ex04 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		int kor=0;
+		int eng=0;
+		int math=0;
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		System.out.println("국어 점수: ");
+		kor= Integer.parseInt(br.readLine());
+		System.out.println("영어 점수: ");
+		eng= Integer.parseInt(br.readLine());
+		System.out.println("수학 점수: ");
+		math= Integer.parseInt(br.readLine());
+		int avg;
+		avg= (kor+eng+math)/3;
+		System.out.println("avg= "+avg);
+		if(avg>=90)
+			System.out.println("A");
+		else if(avg>=80)
+			System.out.println("b");
+		else if(avg>=70)
+			System.out.println("c");
+		else
+			System.out.println("f");
+		
+	}
+
+}
+
+
+문제 1번
+public class Ex05 {
+	public static void main(String[]args){
+		int num=120;
+		if((num%2)==0 && num>0)
+			System.out.println("양수이면서 짝수");
+	}
+
+}
+________________________________________________________________________
+문제 2번
+public class Ex05 {
+	public static void main(String[]args){
+		int num1=50;
+		int num2=100;
+		int big;
+		int diff;
+		
+		if(num1>num2){
+			big= num1;
+			System.out.println("큰 수: "+ big);
+		}
+		else if(num2>num1){
+			big= num2;
+			System.out.println("큰 수: "+ big);
+		}
+		//절대값 출력
+		if(num1>num2){
+			diff=num1-num2;
+			System.out.println("절댓값: "+ diff);
+		}
+		else if(num2>num1){
+			diff=num2-num1;
+			System.out.println("절댓값: "+ diff);
+		}
+	}
+
+}
+_________________________________________________________________________
+문제 3번
+
+
+public class Ex05 {
+	public static void main(String[]args){
+		int n=3;
+		if(n==1)
+			System.out.println("simple Java");
+		
+		else if(n==2)
+			System.out.println("Funny Java");
+		
+		else if(n==3)
+			System.out.println("Fantastic Java");
+		
+		else 
+			System.out.println("The best Java");
+		
+		System.out.println("Do you like Java?");
+	}
+}
+________________________________________________________________________
+문제 4번
+
+public class Ex05 {
+	public static void main(String[]args){
+		int n=24;
+		switch(n/10){
+		case 0:
+			System.out.println("0이상 10미만의 수");
+			break;
+		case 1:
+			System.out.println("10이상 20미만의 수");
+			break;
+		case 2:
+			System.out.println("20이상 30미만의 수");
+			break;
+		default:
+			System.out.println("음수 혹은 30이상의 수");
+		}
+	}
+}
+_______________________________________________________________________________
+문제 5번
+
+public class Ex05 {
+	public static void main(String[]args){
+		int n=1;
+		int sum=0;
+		
+		while(n<100){
+			sum+=n;
+			n++;
+		}
+		System.out.println("1~99까지의 합: "+ sum);
+	}
+}
+_________________________________________________________________________________
+문제 6번
+
+public class Ex05 {
+	public static void main(String[]args){
+		int n=1;
+		while(n<101){
+			System.out.println(n+"");
+			n++;
+		}
+		int n2=100;
+		do{
+			System.out.println(n2+"");
+			n2--;
+		}while(n2>0);
+	}
+}
+_______________________________________________________________________________
+문제 7번
+
+public class Ex05 {
+	public static void main(String[]args){
+		int num=0;
+		int sum=0;
+		
+		while(num<1000){
+			if((num%2)==0 && (num%7)==0){
+				System.out.println(num);
+				sum+=num;
+				//System.out.println("합은? "+sum);
+			}
+			num++;
+		}
+		System.out.println("합은? "+sum);//whlie문을 빠져나와서 그 합 마지막으로 출력
+	}
+}
+_______________________________________________________________________________________________________
+문제 5-5 문제1번
+public class Ex05 {
+	public static void main(String[]args){
+		int n=1;
+		int result=1;
+		
+		for(n=1;n<11;n++){
+			result*=n;
+		}
+		System.out.println("1부터 10까지의 곱의 결과: "+result);
+	}
+}
+____________________________________________________________________________________________________
+문제 5-5 문제 2번
+
+public class Ex05 {
+	public static void main(String[]args){
+		int dan=5;
+		
+		for(int n=1;n<10;n++){
+			System.out.println(dan+"X"+n+"= "+(dan*n));
+		}
+	}
+}
+__________________________________________________________________________________________________
+문제 5-6 문제 1번
+
+public class Ex05 {
+	public static void main(String[]args){
+		int count=0;
+		int r1, r2;
+		
+		for(int num=1;num<100;num++){
+			r1= num%5;
+			r2= num%7;
+			if((r1 !=0)|| (r2 !=0)){
+				continue;
+			}
+			count++;
+			System.out.println(num);
+		}
+		System.out.println("count: "+count);
+	}
+}
+______________________________________________________________________________________________
+class Exceed1000 {
+    public static void main(String[] args) {
+        int sum = 0;
+        int num = 1; 
+    
+        while(true) {
+            if(num % 2 != 0)
+                sum += num;
+
+            if(sum > 1000) {
+                System.out.println(num + " 더할 때 1000을 넘는다.");
+                System.out.println("초과된 값: " + sum);
+                break;
+            }
+            
+            num++;
+        }
+    }
+}
+________________________________________________________________________________________________________
+문제 05-7
+문제 1번
+
+public class Ex05 {
+	public static void main(String[]args){
+		int dan=0;
+		int is=1;
+		while(true){
+
+			if(dan==2){
+				for(is=1; is<3; is++)
+					System.out.println(dan+"x"+is+"= "+(dan*is));
+			}
+			if(dan==4){
+				for(is=1; is<5; is++)
+					System.out.println(dan+"x"+is+"= "+(dan*is));
+			}
+			if(dan==6){
+				for(is=1; is<7; is++)
+					System.out.println(dan+"x"+is+"= "+(dan*is));
+			}
+			if(dan==8){
+				for(is=1; is<9; is++)
+					System.out.println(dan+"x"+is+"= "+(dan*is));
+				break;
+			}
+			dan++;
+			
+		}
+	}
+}
+-------------------------------------------------------------------------------------------------------------
+public class Ex01 {
+	public static void main(String[] args) {
+		for(int i=2; i<9;i+=2){
+			
+			for(int j=1; j<i+1; j++){
+			
+				System.out.println(i+" * "+ j+" = "+ (i*j));
+			}
+			System.out.println();
+		}
+	}
+
+}
+
+_________________________________________________________________________________________________________________
+
+
+문제 2번
+public class Ex01 {
+	public static void main(String[] args) {
+		// A B
+		// B A
+		// 9 9
+		int a=0; //증가
+		int b=9; //감소
+		
+		while(a<10){
+			a++;
+			b--;
+			if((a+b)==9){
+				System.out.println("a = "+a);
+				System.out.println("b = "+b);
+				
+			}
+		}
+	}
+
+}
+
+		

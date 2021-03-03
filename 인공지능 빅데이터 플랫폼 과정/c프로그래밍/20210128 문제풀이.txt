@@ -1,0 +1,412 @@
+20210128
+
+p.320
+문제 1번
+#include<stdio.h>
+int SquareByValue(int num)
+{
+	return num * num;
+}
+int SquareByReference(int*pnum)
+{
+	return *pnum * *pnum;
+}
+
+int main(void)
+{
+	int num = 2;
+
+	printf("%d\n", SquareByValue(num));
+	
+	printf("%d\n",SquareByReference(&num));
+
+	return 0;
+}
+__________________________________________________________
+
+문제 2번
+
+#include<stdio.h>
+int swap3(int* pnum1, int* pnum2, int* pnum3)
+{
+	int temp = 0;
+	temp = *pnum1;
+	*pnum1 = *pnum2;
+	*pnum2 = *pnum3;
+	*pnum3 = temp;
+}
+int main(void)
+{
+	int num1 = 10;
+	int num2 = 20;
+	int num3 = 30;
+
+	swap3(&num1, &num2, &num3);
+
+	printf("%d\n", num1);
+	printf("%d\n", num2);
+	printf("%d", num3);
+
+	return 0;
+}
+______________________________________________________________	
+도전!프로그래밍
+
+문제 1번
+
+int odd(int*ptr)
+{
+	int i;
+	for (i = 0; i < 10; i++)
+	{
+		if (ptr[i] % 2 == 1)
+			printf("%d", ptr[i]);
+	}
+}
+
+int even(int* ptr)
+{
+	int i;
+	for (i = 0; i < 10; i++)
+	{
+		if (ptr[i] % 2 == 0)
+			printf("%d", ptr[i]);
+	}
+}
+
+int main(void)
+{
+	int arr[10];
+	int i;
+	printf("총 10개의 숫자 입력\n");
+	
+	for (i = 0; i < 10; i++)
+	{
+		printf("입력: \n");
+		scanf_s("%d", &arr[i]);
+	}
+	
+	printf("홀수 출력: ");
+	odd(arr);
+	printf("\n");
+	printf("짝수 출력: ");
+	even(arr);
+
+	return 0;
+}
+----------------------------------------------------------------
+#pragma warning (disable: 4996)
+#include <stdio.h>
+/*홀수*/
+void odd(int *ptr)
+{
+    printf("홀수 출력\n");
+    for (int i=0; i<10; i++)
+    {
+        if(ptr[i]%2==1)
+        printf("ptr[%d] = %d\n", i, ptr[i]);
+    }
+}
+/*짝수*/
+void even(int * ptr)
+{
+    printf("짝수 출력\n");
+    for (int i=0; i<10; i++)
+    {
+        if(ptr[i]%2==0)
+        printf("ptr[%d] = %d\n", i, ptr[i]);
+    }
+}
+
+void main()
+{
+    int arr[10];
+    int i=0;
+
+    for(i=0;i<10;i++){
+        printf("숫자 입력: \n");
+        scanf("%d", &arr[i]);
+    }
+    odd(arr);
+    even(arr);
+
+    for (i=0; i<10; i++)
+    {
+        printf("arr[%d] = %d\n", i, arr[i]);
+    }
+   
+}
+________________________________________________________________
+문제 2번
+#include <stdio.h>
+
+int main(void)
+{
+	int num;
+	int bnum[] = { 0, };
+
+	printf("10진수 정수 입력: ");
+	scanf_s("%d", &num);
+
+	int i = 0;
+	while (num != 0)
+	{
+		bnum[i] = num % 2;
+		num / 2;
+		i++;
+	}
+
+	while (i > 0)
+	{
+		printf("%d", bnum[i]);
+		i--;
+	}
+
+	return 0;
+}
+---------------------------------------------------------------------
+void main()
+{
+    int arr[100];
+    int cut = 0;
+    int input_number = 0;
+    int rema_number = 0;
+    int temp_value = 0;
+
+    printf("정수 입력: ");
+    scanf("%d", &input_number);
+
+    printf("input_number= %d", input_number);
+    while (input_number < 2) {
+        rema_number = input_number % 2;
+        arr[cut] = rema_number;
+        cut++;
+
+        int temp_value = input_number / 2;
+        if (temp_value > 2) {
+            arr[cut] = temp_value;
+            cut++;
+            break;
+        }
+        input_number = temp_value;
+    }
+    // 역순 출력
+    int i = 0;
+    for (i = cut; i > -1; i--)
+    {
+        printf("%d %d\n", i, arr[i]);
+    }
+}
+________________________________________________________________
+문제 3번
+#include <stdio.h>
+
+int main(void)
+{
+	int num, i;
+	int arr[10];
+
+	printf("총 10개의 숫자 입력\n");
+	for (i = 0; i < 10; i++)
+	{
+		printf("입력: \n");
+		scanf_s("%d", &num);
+
+		int j = 0, k = 9;
+		if (num % 2 != 0)
+			arr[j++] = num;
+		else
+			arr[k--] = num;
+	}
+	for (i = 0; i < 10; i++)
+		printf("%d ", arr[i]);
+
+	return 0;
+}
+---------------------------------------------------------------------
+void main()
+{
+    int arr[10];
+    int* fp = &arr[0];
+    int* ep = &arr[9];
+
+    int i = 0;
+    while (i < 10)
+    {
+        int temp = 0;
+        printf("정수 입력");
+        scanf("%d", &temp);
+        //홀수
+        if (temp % 2 == 1)
+        {
+            *fp = temp;
+            fp += 1;
+        }
+        //짝수
+        else {
+            *ep = temp;
+            ep -= 1;
+        }
+        i++;
+
+        for (i = 0; i < 10; i++)
+            printf("%d\n", arr[i]);
+
+    }
+    return 0;
+}
+____________________________________________________________________
+문제 4번
+#pragma warning (disable: 4996)
+#include <stdio.h>
+/*회문 검사하고 출력 함수*/
+int Func(int* pptr, int plen)
+{
+	int i;
+	
+	for (i = 0; i < plen / 2; i++) {
+		if (pptr[i] != pptr[plen - 1])
+			printf("회문이 아닙니다");
+		return;//조건 만족하여 출력 후 종료
+	}
+	printf("회문 입니다.");
+	return; // for문 조건 flase일때 출력 후 종료
+}
+
+/*배열의 길이 구하는 함수*/
+int len(char* pptr)
+{
+	return sizeof(pptr) / sizeof(char);
+}
+
+int main(void)
+{
+	char pal[50];
+	
+	printf("문자열 입력: ");
+	scanf("%s", pal);
+
+	int plen = len(pal);
+	printf("문자의 길이: %d\n", plen);
+	Func(pal, plen);
+
+	return 0;
+}
+----------------------------------------------------------------
+선생님 풀이
+#pragma warning (disable: 4996)
+#include <stdio.h>
+int main(void) 
+{
+	char arr[100];
+	char brr[100];
+	int input_len = 0;
+	int i = 0;
+	//글자 입력
+	printf("글자 입력:  \n");
+	scanf("%s",arr);
+
+	printf("입력문자열(arr)= %s\n", arr);
+	//문자열 길이 계산
+	while (1)
+	{
+		if (arr[i] == '\0')
+		{
+			input_len = i;
+			break;
+		}
+		i++;
+	}
+	printf("입력한 문자열 길이: %d\n", input_len);
+	//문자열 역순 출력
+	brr[input_len] = '\0';
+	int j = input_len - 1;
+	for (i = 0; i < input_len; i++, j--)
+		brr[j] = arr[i];
+	printf("%s\n", brr);
+
+	//회문 검사
+	int chk = 1;// 참이면 1, 거짓이면 0이됨
+	for (i = 0; i< input_len; i++)
+		
+		if (arr[i] != brr[i])
+		{
+			chk = 0;
+			printf("회문이 아닙니다.");
+			break;
+		}
+	if (chk)//chk=1이면 참
+		printf("회문입니다");
+
+	return 0;
+}
+
+_______________________________________________________________
+문제 5번
+
+/*오름차순 (버블함수)*/
+int bubble(int* ptr, int len)
+{
+	int i, j;
+	for(i=0;i<len-1; i++)
+		for(j=0;j<(len-1)-i;j++)
+			if (ptr[j] > ptr[j + 1])
+			{
+				int temp = ptr[j];
+					ptr[j] = ptr[j + 1];
+					ptr[j + 1] = temp;
+			}
+}
+
+int main(void) 
+{
+	int arr[7];
+
+	int c;
+	for (c = 0; c < 7; c++)
+	{
+		printf("입력: ");
+		scanf("%d", &arr[c]);
+	}
+	bubble(arr, sizeof(arr) / sizeof(int));
+	
+	for (c = 0; c < 7; c++)
+		printf("%d ", arr[c]);
+
+	return 0;
+	
+}	
+
+/*오름차순 (버블함수)*/
+int bubble(int* ptr, int len)
+{
+	int i, j;
+	for(i=0;i<len-1; i++)
+		for(j=0;j<(len-1)-i;j++)
+			if (ptr[j] < ptr[j + 1])// 기호 >는 오름차순
+				//배열요소 앞이 뒤에 오는 요소보다 작으다면 뒤로 보내기
+			{
+				int temp = ptr[j];
+					ptr[j] = ptr[j + 1];
+					ptr[j + 1] = temp;
+			}
+}
+
+int main(void) 
+{
+	int arr[7];
+
+	int c;
+	for (c = 0; c < 7; c++)
+	{
+		printf("입력: ");
+		scanf("%d", &arr[c]);
+	}
+	bubble(arr, sizeof(arr) / sizeof(int));
+	
+	for (c = 0; c < 7; c++)
+		printf("%d ", arr[c]);
+
+	return 0;
+	
+}

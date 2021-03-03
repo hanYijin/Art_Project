@@ -1,0 +1,165 @@
+메모리의 동적할당
+
+힙영역의 메모리 공간 할당과 해제
+#include<stdio.h>
+#include<stdlib.h>
+
+static int a =10; //전역 변수 데이터 영역에 메모리 공간 할당
+void doA()
+{
+   a=20;
+   int b= 20;// 지역변수, 스택 영역
+   int c= 40;
+   static int e = 50;
+}
+
+void main()
+{
+    int b = 20; //지역변수, 스택영역에 메모리 공간 할당
+    int c = 30;
+    void*ptr1=malloc(4); //힙영역에 매모리 공간 할당
+    void*ptr2=malloc(5); // 메모리 공간의 첫 번째에 주소 값을 반환 
+
+    printf("ptr1 = %d\n", ptr1);
+    printf("ptr2 = %d\n", ptr2);
+
+    free(ptr1);
+    free(ptr2);
+}
+
+ptr1 = 7506432
+ptr2 = 7506464//반환하는 형은 결정안되고 힙영역에 메모리공간을 4바이트 할당하고 그 공간의 주소값을 반환함.
+___________________________________________________________________________________
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(void)
+{
+    int * ptr1= (int*)malloc(sizeof(int));//ptr ->힙영역 메모리 공간 첫번째 주소값 
+    int *ptr2= (int*)malloc(sizeof(int)*7);// int형 변환을 int형 메모리 공간이 할당되고 주소값 반환 int형(4바이트) 7개인 배열
+                                                   첫번째 요소 ptr2[0]주소값
+    *ptr1=20;
+    for(int i=0; i<7; i++)
+    {
+        ptr2[i]=(i+1);  //(*ptr2+i)=(i+1);
+    }
+
+    printf("*ptr1= %d\n", *ptr1);
+    for(int i=0; i<7; i++)
+    {
+        printf("ptr2[%d]= %d\n", i,(*ptr2+i));
+    }
+    free(ptr1);
+    free(ptr2);
+}
+
+*ptr1= 20
+ptr2[0]= 1
+ptr2[1]= 2
+ptr2[2]= 3
+ptr2[3]= 4
+ptr2[4]= 5
+ptr2[5]= 6
+ptr2[6]= 7
+
+_________________________________________________________________________________________________
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(void)
+{   
+    int a =0;
+    scanf("%d",&a);
+    int * ptr1= (int*)malloc(sizeof(int));//ptr ->힙영역 메모리 공간 첫번째 주소값 
+    int *ptr2= (int*)malloc(sizeof(int)*a);
+
+    *ptr1=20;
+    for(int i=0; i<a; i++)
+    {
+        ptr2[i]=(i+1);//(*ptr2+i)=(i+1);
+    }
+
+    printf("*ptr1= %d\n", *ptr1);
+    for(int i=0; i<a; i++)
+    {
+        printf("ptr2[%d]= %d\n", i,(*ptr2+i));
+    }
+    free(ptr1);
+    free(ptr2);
+}
+5
+*ptr1= 20
+ptr2[0]= 1
+ptr2[1]= 2
+ptr2[2]= 3
+ptr2[3]= 4
+ptr2[4]= 5
+________________________________________________
+#include<stdlib.h>
+#include<stdio.h>
+
+char * ReadUserName()
+{
+    char * name =(char*)malloc(sizeof(char)*30);
+    printf("이름을 입력하세요");
+    scanf("%s", name);
+    return name;
+}
+void main ()
+{
+    char* name1=ReadUserName();
+    char* name2=ReadUserName();
+    printf("*name1= %s\n",name1);
+    printf("*name2= %s\n", name2);
+
+    free(name1);
+    free(name2);
+}
+이름을 입력하세요aaa
+이름을 입력하세요bbb
+*name1= aaa
+*name2=bbb
+_______________________________________________________
+선행처리기
+#define 
+#include<stdlib.h>
+#include<stdio.h>
+
+#define NAME "hanyijin"
+#define AGE 26
+#define PRINT_ADDR puts("address print")
+
+void main()
+{
+    printf("%s\n", NAME);
+    printf("%d\n", AGE);
+    PRINT_ADDR;
+    
+}
+hanyijin
+26
+address print
+_____________________________________________________
+#include<stdio.h>
+#include<stdlib.h>
+
+#define ADD
+#define HIT_NUM 5
+
+void main()
+{
+    #ifdef ADD
+        printf("ADD!!\n");
+    #endif
+
+    #if HIT_NUM == 5
+        printf("HITH_NUM: 5");
+    #elif HIT_NUM == 6
+        printf("HIY_NUM: 6");
+    #endif
+}
+
+ADD!!
+HITH_NUM: 5
+
+________________________________________________________

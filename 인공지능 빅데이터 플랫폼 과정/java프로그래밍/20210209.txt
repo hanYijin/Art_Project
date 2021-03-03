@@ -1,0 +1,135 @@
+class A{
+	int a=10;
+}
+class B{
+	int b=20;
+}
+클래스 이해하기
+
+class C{
+	public void doSetAB(A aa, B bb){
+		aa.a=30;
+		bb.b=40;
+	}
+	public void doPrint(A aa, B bb){
+		System.out.println("aa.a= "+ aa.a);
+		System.out.println("bb.b= "+ bb.b);
+	}
+}
+public class Ex02 {
+	public static void main(String[] args) {
+		A a1= new A();
+		A a2= new A();
+		B b1=new B();
+		B b2= new B();
+		
+		C c = new C();
+		
+		System.out.println("a1========== b1===========");
+		c.doPrint(a1, b1);
+		
+		c.doSetAB(a1,b1);
+		System.out.println("a1========== b1===========");
+		c.doPrint(a1, b1);
+		System.out.println("a2========== b2===========");
+		c.doPrint(a2, b2);
+	}
+
+}
+
+a1========== b1===========
+aa.a= 10
+bb.b= 20
+a1========== b1===========
+aa.a= 30
+bb.b= 40
+a2========== b2===========
+aa.a= 10
+bb.b= 20
+______________________________________________________________________________________________
+class AA{
+//생성자는 메서드와 비슷하지만 반환되는 값이 없다.
+//생성자는 클래스 명과 동일
+	public AA(){
+		System.out.println("AA생성자");
+	}
+}
+class BB{
+	public BB(){
+		System.out.println("BB생성자");
+	}
+}
+public class Ex03 {
+	public static void main(String[] args) {
+		//메모리에 올리때 생성자를 호출한다!
+		new AA();// 
+		new BB();
+	}
+
+}
+AA생성자
+BB생성자
+___________________________________________________________________________
+class AA{
+	public AA(){//생성자는 메서드와 비슷하지만 반환되는 값이 없다.
+		//생성자는 클래스 명과 동일
+		// 메서드 오버로딩: 매세드 명이 같더라도 매개변수가 다르면 다른 메서드로 본다.
+		System.out.println("AA생성자");
+	}
+	//생성자 오버로딩
+	public AA(int a){
+		System.out.println("a매개변수에 있는 생성자 a= "+ a);
+	}
+}
+class BB{
+	public BB(){
+		System.out.println("BB생성자");
+	}
+}
+public class Ex03 {
+	public static void main(String[] args) {
+		AA a1= new AA();//메모리에 올리때 생성자를 호출한다!
+		System.out.println(a1);
+		
+		AA a2= new AA(10);
+		System.out.println(a2);
+		
+		new BB();
+	}
+
+}
+AA생성자
+AA@15db9742
+a매개변수에 있는 생성자 a= 10
+AA@6d06d69c
+BB생성자
+_____________________________________________________________________________________________________________________
+문제 7-1
+class Triangle{
+	double base;
+	double height;
+	public Triangle(double b, double h){
+		base=b;
+		height=h;
+	}
+	public void Change(double bc, double hc){
+		base= bc;
+		height=hc;
+	}
+	public double Area(){
+		return (base *height)/2;
+	}
+}
+public class Ex04 {
+	public static void main(String[] args) {
+		Triangle t1= new Triangle(3,5);
+		System.out.println("t1 area= "+ t1.Area());
+		t1.Change(4, 6);
+		System.out.println("t1 area= "+ t1.Area());
+		Triangle t2= new Triangle(6,8);
+		t2.Change(2, 3);
+		System.out.println("t2 area= "+ t2.Area());
+	}
+
+}
+

@@ -1,0 +1,64 @@
+2021/02/02
+P. 387~388
+문제 1번
+
+int main(void)
+{
+	int* arr1[5];
+	int* arr2[3][5];
+	
+	int** parr1 = arr1;
+	int(*parr2) = arr2;
+}
+______________________________________________
+문제 2번
+void SimpleFuncOne(int* parr1, int* parr2) {}
+void SimpleFuncTwo(int(*parr3)[4], int(*parr4)[4]){}
+int main(void)
+{
+	int arr1[3];
+	int arr2[4];
+	int arr3[3][4];
+	int arr4[2][4];
+
+	SimpleFuncOne(arr1, arr2);
+	SimpleFuncTwo(arr3, arr4);
+}
+______________________________________________________________
+문제 3번
+void SimpleFuncOne(int** parr1, int*(* parr2)[5]) {}
+void SimpleFuncTwo(int***parr3, int***(*parr4)[5]){}
+int main(void)
+{
+	int* arr1[3];
+	int* arr2[3][5];
+	int** arr3[5];
+	int*** arr4[3][5];
+
+	SimpleFuncOne(arr1, arr2);
+	SimpleFuncTwo(arr3, arr4);
+}
+___________________________________________________________________
+문제 4번
+int main(void)
+{
+	int arr[3][2] = { {1,2},{3,4},{5,6} };
+	printf("%d %d \n", arr[1][0], arr[0][1]);// >>>3 2 
+	printf("%d %d \n", *(arr[2] + 1), *(arr[1] + 1));//>>> 6 4
+	printf("%d %d \n", (*(arr + 2))[0], (*(arr + 0))[1]);//>>> 5 2
+	printf("%d %d \n", **arr, *(*(arr + 0)+0));//>> 1 1
+	return 0;
+}
+_____________________________________________________________________________
+문제 5번
+int main(void)
+{
+	int arr[2][2][2] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	printf("%d \n", arr[1][0][1]);
+	printf("%d \n", (*(arr+1))[0][1]);
+	printf("%d \n", (*(arr[1]+0))[1]);
+	printf("%d \n", (*(*(arr+1)+0))[1]);
+	printf("%d \n", (*(*(arr[1]+0))+1));
+	printf("%d \n", *(arr[1][0])+1);
+	return 0;
+}

@@ -1,0 +1,740 @@
+#include <stdio.h>
+
+void ShowArr(int (*arr)[4]);
+void RotateArr(int (*arr)[4]);
+
+int main(void)
+{
+	int i=0;
+
+	int arr[4][4] = { 
+		{1,		2,		3,		4},
+		{5,		6,		7,		8},
+		{9,		10,		11,		12},
+		{13,	14,		15,		16},
+	};
+	
+	for(i=0; i<4; i++)
+	{
+		ShowArr(arr);
+		RotateArr(arr);		
+	}
+
+	return 0;
+}
+
+
+void ShowArr(int (*arr)[4])
+{
+	int i, j;
+	printf("----Show Array----\n");
+
+	for(i=0; i<4; i++)
+	{
+		for(j=0; j<4; j++)
+			printf("%5d", arr[i][j]);
+
+		printf("\n");
+	}
+	printf("\n");
+}
+
+void RotateArr(int (*arr)[4])
+{
+	int i, j;
+	int temp[4][4];
+
+	for(i=0; i<4; i++)
+	{
+		for(j=0; j<4; j++)
+			temp[j][3-i]=arr[i][j];
+	}
+
+	for(i=0; i<4; i++)
+	{
+		for(j=0; j<4; j++)
+			arr[i][j]=temp[i][j];
+	}
+}
+________________________________________________________________
+도전 프로그래밍!
+문제 1번
+#include<stdio.h>
+void printArr(int (*arr)[4])
+{
+	int i, j = 0;
+	
+	for (i = 0; i < 4; i++)
+	{
+		for (j = 0; j < 4; j++)
+		{
+			printf("%d ", arr[i][j]);
+		}
+		printf("\n");
+	}
+}
+void Rarr(int(*arr)[4])
+{
+	int i, j = 0;
+	int temp[4][4];
+	for (i = 0; i < 4; i++)
+	{
+		for (j = 0; j < 4; j++)
+		{
+			temp[j][3 - i] = arr[i][j];
+
+		}
+	}
+	for (i = 0; i < 4; i++)
+	{
+		for (j = 0; j < 4; j++)
+		{
+			arr[i][j] = temp[i][j];
+
+		}
+	}
+}
+int main(void)
+{
+	int arr[4][4] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16 };
+	printArr(arr);
+	
+	int i = 0;
+	for (i = 0; i < 4; i++)
+	{
+		printArr(arr);
+		Rarr(arr);
+	}
+
+	return 0;
+}
+
+----------------------------------------------------------------------------------------------
+#include<stdio.h>
+//출력 함수
+void doPrint(int(*parr)[4])
+{
+	int i, j;
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			printf("%d\t", parr[i][j]);
+		}
+		printf("\n");
+	}
+}
+//배열 90도 돌리기
+void doChange(int(*parr)[4], int (*temp)[4])
+{
+	int i, j;
+	int k = 3;
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			temp[j][k] = parr[i][j];
+		}
+		k--;
+	}
+	
+}
+void main() {
+	int arr[4][4] = {
+		{1,2,3,4},
+		{5,6,7,8},
+		{9,10,11,12},
+		{13,14,15,16}
+	};
+
+	doPrint(arr);// 출력하는 함수호출
+	int temp[4][4];
+	printf("____90도 회전 배열______\n");
+	doChange(arr, temp);
+	doPrint(temp);
+	
+	printf("____90도 회전 배열______\n");
+	doChange(temp, arr);
+	doPrint(arr);
+
+	printf("____90도 회전 배열______\n");
+	doChange(arr, temp);
+	doPrint(temp);
+
+	return 0;
+}
+_____________________________________________________________________________________________
+도전 2!
+#include<stdio.h>
+void Darr(int(*ptr)[5], int len)
+{
+	int i;
+	for (i = 0; i < len; i++)
+		printf("%d ", ptr[0][i]);
+	for (i = 1; i < (len - 1); i++)
+		printf("%d ", ptr[i][4]);
+	for (i = 3; i > 0; i--)
+		printf("%d ", ptr[4][i]);
+	for (i = 4; i > 0; i--)
+		printf("%d ", ptr[i][0]);
+	for (i = 1; i < (len - 1); i++)
+		printf("%d ", ptr[1][i]);
+	for (i = 2; i < (len - 1); i++)
+		printf("%d ", ptr[i][3]);
+	for (i = 2; i > 0; i--)
+		printf("%d ", ptr[3][i]);
+	for (i = 1; i < (len - 2); i++)
+		printf("%d ", ptr[2][i]);
+}
+
+int main(void)
+{
+	int arr[5][5] = { 1,2,3,4,5,16,17,18,19,6,15,24,25,20,7,14,23,22,21,8,13,12,11,10,9 };
+	int len;
+
+	printf("숫자를 입력하시오 : \n");
+	scanf_s("%d", &len);
+	
+	Darr(arr, len);
+
+	return 0;
+}
+----------------------------------------------------------------------------------------------------
+____________________________________________________________________________________________________
+씨드 값 이력하여 Srand함수로 인자 전달하여 난수 출력
+
+#include<stdio.h> 
+#include<stdlib.h>
+
+
+
+int main(void)
+{
+	int seed, i;
+	printf("씨드 값 입력: ");
+	scanf_s("%d", &seed);
+	srand(seed);
+
+	for (i = 0; i < 5; i++)
+		printf("정수 출력: %d \n", rand());
+	return 0;
+}
+___________________________________________________________________________________________________
+프로그램 실행 시마다 다른 정수를 얻는(컴퓨터의 시간 값)것으로 난수 출력
+
+#include<stdio.h> 
+#include<stdlib.h>
+#include<time.h>
+
+
+int main(void)
+{
+	int i;
+
+	srand((int)time(NULL));//현재 시간을 이용해서 씨드 설정
+
+	for (i = 0; i < 5; i++)
+		printf("정수 출력: %d \n", rand());
+	return 0;
+}
+______________________________________________________________________________________________________
+도전 4!
+#include<stdio.h> 
+#include<stdlib.h>
+#include<time.h>
+
+
+int main(void)
+{
+	int i;
+
+	srand((int)time(NULL));//현재 시간을 이용해서 씨드 설정
+
+	for (i = 0; i < 2; i++)
+		printf("주사위 %d의 결과: %d \n",i+1, rand()%7);
+	return 0;
+}
+----------------------------------------------------------------------------------------
+#include<stdio.h> 
+#include<stdlib.h>
+#include<time.h>
+
+int RollRand()
+{
+	return rand() % 7;
+}
+int main(void)
+{
+	int i;
+	int rol1;
+	int rol2;
+
+	srand((int)time(NULL));//현재 시간을 이용해서 씨드 설정
+
+	rol1 = RollRand();
+	rol2 = RollRand();
+	printf("주사위의 결과: %d %d\n", rol1,rol2);
+	return 0;
+}
+-------------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+const int M = 1;	//바위(묵)
+const int G = 2;	//가위(찌)
+const int B = 3;	//보(빠)
+
+void Randomize(void);
+int GetComSel(void); // rand함수 사용
+int GetUsrSel(void); // 사용자 입력
+int WhoWin(int a, int b); // 승패 확인 
+
+int main(void)
+{
+	int com, usr;
+	int result;
+	int win = 0, same = 0;
+
+	Randomize();
+
+	while (1)
+	{
+		usr = GetUsrSel();
+		com = GetComSel();
+
+		result = WhoWin(com, usr);
+		if (result == 1)
+		{
+			printf("당신이 이겼습니다. \n");
+			win++;
+		}
+		else if (result == -1)
+		{
+			printf("당신이 졌습니다. \n");
+			break;
+		}
+		else
+		{
+			printf("비겼습니다. \n");
+			same++;
+		}
+	}
+
+	printf("게임의 결과: %d승, %d무 \n", win, same);
+	return 0;
+}
+
+void Randomize(void)
+{
+	srand((int)time(NULL));
+}
+
+int GetComSel(void)
+{
+	int sel = rand() % 3 + 1;
+	if (sel == 1)
+		printf("컴퓨터는 바위 선택, ");
+	else if (sel == 2)
+		printf("컴퓨터는 가위 선택, ");
+	else
+		printf("컴퓨터는 보 선택, ");
+
+	return sel;
+}
+
+int GetUsrSel(void)
+{
+	int sel;
+	printf("바위는 1, 가위는 2, 보는 3 : ");
+	scanf_s("%d", &sel);
+
+	if (sel == 1)
+		printf("당신은 바위 선택, ");
+	else if (sel == 2)
+		printf("당신은 가위 선택, ");
+	else
+		printf("당신은 보 선택, ");
+
+	return sel;
+}
+
+int WhoWin(int s1, int s2)
+{
+	if (s1 == s2)
+		return 0;
+	else if (s1 % 3 == (s2 + 1) % 3)	// s2승
+		return 1;
+	else			// s1승
+		return -1;
+}
+__________________________________________________________________________________________
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int checkResult(int* uptr, int * cptr)
+{
+	int i;
+
+}
+int camRand();
+
+int main(void)
+{
+	int uarr[3];
+	int carr[3];
+
+	printf("Start Game!\n");
+
+	int i;
+
+	printf("3개의 숫자 선택: ");
+	for (i = 0; i < 3; i++) {
+		scanf_s("%d", &uarr[i]);
+	}
+
+	srand((int)time(NULL));
+	for (i = 0; i < 3; i++)
+	{
+		carr[i] = rand() % 10;
+	}
+	checkResult(uarr, carr);
+	return 0;
+}
+/*
+    달팽이 배열..
+*/
+#include <stdio.h>
+
+int len = 5;
+int cur = 0;
+
+void doPrint(int (*arr)[100]){
+    for(int i =0; i<len ; i++){
+        for(int j=0; j<len ; j++){
+            printf("%d\t",arr[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void main(){
+    printf("배열 크기 입력");
+    scanf("%d",&len);
+    
+    int arr[100][100] ={0,};
+    int drec = 1;   // 1 오른쪽 , 2 아래, 3 왼쪽, 4 위
+    /*
+        1  2  3  4  5
+        16 17 18 19 6
+        15 24 25 20 7
+        14 23 22 21 8
+        13 12 11 10 9
+    */
+    int value = 1;
+    int i =0,j=0;
+    while(1){
+        if(arr[i][j] != 0){
+            // printf("되나");
+            break;
+        }
+        if(drec == 1){
+            arr[i][j] = value++;
+            j++;
+            if((len-cur) == j){
+                drec = 2; // 지금 좌표는 0,5
+                i = i+1;    // i = 1
+                j = j-1;    // j = 4
+            }
+        }
+        else if(drec == 2){ // 1,4 -> 2,3 ->3,3 -> 4,3
+             arr[i][j] = value++;
+             i++;
+             if((len-cur) == i){
+                 // 5 4 -> 4 3
+                // printf("\narr[%d][%d] = %d\n",i,j,arr[i][j]);
+                drec = 3;
+                i--;
+                j--;
+                // printf("\narr[%d][%d] = %d\n",i,j,arr[i][j]);
+             }
+        }
+        else if(drec == 3){
+            arr[i][j] = value++;
+            j--;
+            if( j == (-1+cur) ){  // 4, -1
+                drec=4;
+                i--;
+                j++;
+            }
+        }
+        else if(drec == 4){
+            arr[i][j] = value++;
+            i--;
+            if(i == (0+cur)){
+                printf("\narr[%d][%d] = %d\n",i,j,arr[i][j]);
+                drec = 1;
+                cur = cur + 1;
+                i = cur, j = cur;
+            }
+        }
+    }
+
+     doPrint(arr);
+}
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+/*달팽이 배열*/
+int len = 5;
+int cur = 0;
+/*배열 출력하기*/
+void doPrint(int(* arr)[100])
+{
+	for (int i = 0; i < len; i++) {
+		for (int j = 0; j < len; j++) {
+			printf("%d \t", arr[i][j]);
+		}
+		printf("\n");
+	}
+		
+}
+void main()
+{
+	printf("배열 크기 입력: ");
+	scanf_s("%d", &len);
+
+	int arr[100][100] = { 0, };
+
+	int drec = 1; //1 오른쪽, 2 아래, 3 왼쪽, 4 위 로
+	int value = 1;
+	int i = 0, j = 0;
+	while(1)
+	{
+		if (arr[i][j] != 0) { 
+			break;
+		}//모든 배열 요소가 0으로 초기화 값이 변경으로 0이 아니므로 반복문 탈출
+		
+		if (drec == 1) {// 오른쪽으로 이동
+			arr[i][j] = value++;//1부터 후위 증가
+			j++; //00 01 02 03 04 05
+			if ((len-cur) == j) {
+				drec = 2;
+				i = i + 1;// 여기까지의 좌표는 0,5
+				j = j - 1;
+			}
+		}
+		else if (drec == 2) {
+			arr[i][j] = value++;
+			i++;
+
+			if (len == i) {
+				drec = 3;
+				i--;
+				j--;
+				break;
+
+			}
+
+		}
+		else if (drec == 3) {
+			arr[i][j] = value++;
+			j--;
+			if (j== (-1+cur)){
+				//4,-1
+				drec = 4;
+				i--;
+				j++;
+
+			}
+		}
+		else if (drec == 4) {
+			arr[i][j] = value++;
+			i--;
+				
+		if (i = 0) {
+					//printf("arr[%d][%d] = %d\n", i, j, arr[i][j]);
+			drec = 1;
+			cur += 1;
+			i = cur, j = cur;//i=1,j=1
+				}
+		}
+	}
+	doPrint(arr);
+}
+
+_____________________________________________________________________________________________________________
+난수 
+#include <stdio.h>
+#include <stdlib.h>
+#pragma warning (disable: 4996)
+
+void main()
+{
+	printf("난수 출력 %d\n", RAND_MAX);//최대값
+	for (int i = 0; i < 10; i++) {
+		printf("%d\n", rand());//의사 난수
+	}
+	
+
+	return 0;
+}
+---------------------------------------------------------------------------------
+
+0~99사이 난수 출력
+
+void main()
+{
+	printf("난수 출력 %d\n", RAND_MAX);//최대값
+	for (int i = 0; i < 10; i++) {
+		printf("%d\n", rand()%100); // 0~99의 의사 난수
+	}
+	
+
+	return 0;
+}
+----------------------------------------------------------------------------------
+씨드 값
+void main()
+{
+	printf("난수 출력 %d\n", RAND_MAX);//최대값
+	
+	srand(5);// seed 값
+	
+	for (int i = 0; i < 10; i++) {
+		printf("%d\n", rand()%100);//의사 난수
+	}
+	
+
+	return 0;
+}
+------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+#include<time.h>
+#pragma warning (disable: 4996)
+
+void main()
+{	// utc시간을 가져온다
+	printf("1970/01/01 부터 초의 변화 = \n");
+	printf("%d\n\n", (int)time(NULL));
+
+
+
+-------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+#include<time.h>
+#pragma warning (disable: 4996)
+
+void main()
+{
+	srand((int)time(NULL));// seed 값으로 초단위 시간 전달
+	
+	for (int i = 0; i < 10; i++) {
+		printf("%d\n", rand()%100); //
+	}
+	
+
+	return 0;
+}
+-------------------------------------------------------------------------------------------------------------------
+문제 4
+
+#include <stdio.h>
+#include <stdlib.h>
+#include<time.h>
+#pragma warning (disable: 4996)
+
+void main()
+{
+	srand((int)time(NULL));// seed 값
+	
+	
+	printf("주사위 1의 결과 %d\n", rand()%6+1); //주사위 1~6
+	                      // rand()%6; 0~5 -> 	0+1~5+1
+	printf("주사위 2의 결과 %d\n", rand() % 6 + 1);
+						  //1/1000초 단위로 시간을 가져오는 millsSecond()
+
+	return 0;
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#include<time.h>
+#pragma warning (disable: 4996)
+
+void main()
+{
+	// 값이 0이 false 0이 아닌 값은 true
+	int seo = 1;
+	int select = 0;
+	int compu_select = 0;
+	
+	int win = 0, lose = 0, draw = 0;//승패 점수
+
+	// 1 가위 2바위 3보
+	while (seo)
+	{
+		printf("가위 바위 보 선택?");
+		scanf("%d", &select);
+		srand((int)time(NULL));
+		compu_select = (rand() % 3) + 1;
+
+		if (select == 1)
+		{
+			// 비김
+			if (compu_select == 1) {
+				draw++;
+				printf("당신의 선택은 가위, 컴퓨터는 가위, 비겼습니다\n");
+			}
+			//졌음
+			else if (compu_select == 2) {
+				lose++;
+				seo = 0;
+				printf("당신의 선택은 가위, 컴퓨터는 바위, 졌습니다\n");
+			}
+			//이김
+			else if (compu_select == 3) {
+				win++;
+				printf("당신의 선택은 가위, 컴퓨터는 보, 이겼습니다\n");
+			}
+		}
+		if (select == 2)
+		{
+			// 비김
+			if (compu_select == 1) {
+				win++;
+				printf("당신의 선택은 바위, 컴퓨터는 가위, 이겼습니다\n");
+			}
+			//졌음
+			else if (compu_select == 2) {
+				draw++;
+				seo = 0;
+				printf("당신의 선택은 가위, 컴퓨터는 바위, 졌습니다\n");
+			}
+			//이김
+			else if (compu_select == 3) {
+				win++;
+				printf("당신의 선택은 가위, 컴퓨터는 보, 이겼습니다\n");
+			}
+		}
+		
+
+		printf("게임의 결과 %d승 %d무 %d패\n", win, draw, lose);
+		
+	}
+
+
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+

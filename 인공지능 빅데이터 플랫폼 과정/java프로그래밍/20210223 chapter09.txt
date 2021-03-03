@@ -1,0 +1,199 @@
+public class Ex01_out {
+	int a=10;
+	int b=20;
+	String name="";
+	public void doA(){
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+	}
+}
+public class Ex01 {
+	public static void main(String[] args) {
+	Ex01_out ex01= new Ex01_out();
+	ex01.doA();
+	}
+}
+a= 10
+b= 20
+___________________________________________________________________
+
+public class Ex01_out {
+	int a=10;
+	int b=20;
+	String name="";
+	public Ex01_out(){}
+	public Ex01_out(String a){
+		name= a;
+	}
+	public void doA(){
+		
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+	}
+	public void namePrint(){
+		System.out.println("name = "+ name);
+	}
+}
+public class Ex01 {
+	public static void main(String[] args) {
+	Ex01_out ex01= new Ex01_out();
+	ex01.doA();
+	ex01.namePrint();
+	Ex01_out ex02 = new Ex01_out("매개변수");
+	ex02.namePrint();
+	}
+	public void doA(){
+		
+	}
+}
+a= 10
+b= 20
+name = 
+name = 매개변수
+________________________________________________________________
+정보은닉
+public class Circle {
+	double rad;
+	Circle(){}
+	Circle(double r){
+		rad=r;
+	}
+	double getArea(){
+		return rad*rad*3.14;
+	}
+	void setRad(double r){
+		rad=r;
+	}
+}
+
+public class UnsafeCri{
+	public static void main(String[] args) {
+		Circle c =new Circle(1.5);
+		double area= c.getArea();
+		System.out.println("c넓이= "+area);
+		
+		c.setRad(2.5);
+		area= c.getArea();
+		System.out.println("c넓이= "+area);
+	}
+}
+c넓이= 7.065
+c넓이= 19.625
+
+public class Circle {
+	double rad;
+	Circle(){}
+	Circle(double r){
+		rad=r;
+	}
+	double getArea(){
+		return rad*rad*3.14;
+	}
+	void setRad(double r){
+		
+		if(r<0){
+			r=0;
+			System.out.println("반지름은 양수여야 합니다!!");
+			return;
+		}
+		rad=r;
+	}
+}
+
+public class UnsafeCri{
+	public static void main(String[] args) {
+		Circle c =new Circle(1.5);
+		double area= c.getArea();
+		System.out.println("c넓이= "+area);
+		
+		c.setRad(2.5);
+		area= c.getArea();
+		System.out.println("c넓이= "+area);
+		
+		c.setRad(-1.5);
+		c.rad=-4.5;
+		System.out.println(c.getArea());
+	}
+}
+c넓이= 7.065
+c넓이= 19.625
+반지름은 양수여야 합니다!!
+63.585 //private double rad; 오류발생!
+//private는 자기 자신 클래스에만 접근가능
+____________________________________________________________
+public class Desk {
+	private int leg;
+	private String name;
+	// alt+shift+s->r: setter와 getter가 자동 생성
+	public int getLeg() {
+		return leg;
+	}
+	public void setLeg(int leg) {
+		this.leg = leg;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+}
+__________________________________________________________
+public class Employee {
+	
+	private String name;
+	private String jumin;
+	private int pay;
+	public void setName(String name){
+		this.name=name;//this: 클래스내의 name변수
+		//name=name;
+	}
+	public void setjumin(String jumin){
+		this.jumin=jumin;
+	}
+	public void setpay(int pay){
+		this.pay=pay;
+	}
+	public void doPrint(){
+		System.out.println("이름: "+name);
+		System.out.println("주민번호: "+jumin);
+		System.out.println("연봉: "+pay);
+	}
+//private 접근제어지시자 설정
+/*1. setName
+  2.생성자로
+ */
+}
+
+import java.util.Scanner;
+
+public class Emain {
+	public static void main(String[] args) {
+		Employee per =new Employee();
+		//per.name="한이진";
+		Scanner scan= new Scanner(System.in);
+		System.out.println("이름을 입력하세요");
+		String name= scan.nextLine();
+		per.setName(name);
+		
+		System.out.println("주민번호를 입력하세요");
+		String jumin= scan.nextLine();
+		per.setjumin(jumin);
+		
+		System.out.println("연봉을 입력하세요");
+		int pay= scan.nextInt();
+		per.setpay(pay);
+		
+		per.doPrint();
+	}
+}
+이름을 입력하세요
+한이진
+주민번호를 입력하세요
+961116
+연봉을 입력하세요
+10000
+이름: 한이진
+주민번호: 961116
+연봉: 10000

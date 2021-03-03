@@ -1,0 +1,43 @@
+20210128 Java 이해하기
+
+/* 변수 상수화*/
+public class ex01 {
+	public static void main(String[]args){
+		int a =10;
+		final int b =20; //final 변수 상수화
+		
+		System.out.println("a="+a);
+		System.out.println("b="+b);
+		
+		a= 30;
+//		b=40;
+		
+		System.out.println("a="+a);
+		System.out.println("b="+b);
+	}
+
+}
+__________________________________________________________
+
+/* 자료형 변환 이해하기*/
+문제) 입력 21.345 >>>출력 21.34 
+
+import java.util.Scanner; //문장 자동생성: Scanner입력하고 ctrl + space바
+
+public class Ex04 {
+	public static void main(String[] args){
+		
+		Scanner scan =new Scanner(System. in);
+		System.out.println("소수점 입력: ");
+		double a = scan.nextDouble();
+		System.out.println("a= "+a);
+		
+		a*=100;
+		System.out.println("a="+a);
+		int b = (int)a;
+		System.out.println("b= "+b);
+		double c=(double)b/100;
+		System.out.println("출력 \n c= "+c);
+	}
+}
+

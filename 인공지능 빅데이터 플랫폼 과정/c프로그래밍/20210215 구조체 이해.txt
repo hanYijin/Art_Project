@@ -1,0 +1,288 @@
+20210215
+#include <stdio.h>
+#include <math.h>
+struct point // 구조체 정의
+{
+	int xpos;
+	int ypos;
+};
+
+void main()
+{
+	struct point pos1, pos2; // 구조체 변수 선언
+	double distance; // 두 위치의 거리
+
+	fputs("pos1 pos: \n", stdout);
+	scanf_s("%d %d", &pos1.xpos, &pos1.ypos); // pos1의 맴버 값 입력
+
+	fputs("pos2 pos: \n", stdout);
+	scanf_s("%d %d", &pos2.xpos, &pos2.ypos); // pos2의 맴버 값 입력
+
+
+	distance = sqrt((double)((pos1.xpos - pos2.xpos) * (pos1.xpos - pos2.xpos) + (double)(pos1.ypos - pos2.ypos) * (pos1.ypos - pos2.ypos)));
+
+	printf("%g\n", distance);
+	printf("sizeof(pos1)= %d\n", sizeof(pos1));
+	printf("sizeof(pos2)= %d\n", sizeof(pos2));
+
+	printf("&pos1= %d\n", &pos1);
+	printf("&pos1.xpos= %d\n", &pos1.xpos);
+	printf("&pos1.ypos= %d\n", &pos1.ypos);
+	printf("&pos2.xpos= %d\n", &pos2.xpos);
+	printf("&pos2.ypos= %d\n", &pos2.ypos);
+
+
+
+	return 0;
+}
+
+pos1 pos:
+1 3
+pos2 pos:
+4  5
+3.60555
+sizeof(pos1)= 8
+sizeof(pos2)= 8
+&pos1= 5241836
+&pos1.xpos= 5241836
+&pos1.ypos= 5241840
+&pos2.xpos= 5241820
+&pos2.ypos= 5241824
+____________________________________________________________________________________________________________
+#include <stdio.h>
+#include <string.h>
+#pragma warning (disable: 4996)
+
+struct person
+{
+	char name[20];
+	char phoneNum[20];
+	int age;
+};
+void main()
+{
+	struct person man1, man2;
+	strcpy(man1.name, "한이진");
+	strcpy(man1.phoneNum, "010-9982-7993");
+	man1.age = 26;
+
+	printf("name: ");
+	gets( man2.name);
+	printf("phoneNum: ");
+	gets(man2.phoneNum);
+	printf("age: ");
+	scanf("%d", &man2.age);
+
+	printf("man1 name: %s\n", man1.name);
+	printf("man1 phone: %s\n", man1.phoneNum);
+	printf("man1 age: %d\n", man1.age);
+
+	printf("man2 name: %s\n", man2.name);
+	printf("man2 phone: %s\n", man2.phoneNum);
+	printf("man2 age: %d\n", man2.age);
+
+	return 0;
+}
+______________________________________________________________________________________
+#include <stdio.h>
+#include <string.h>
+#pragma warning (disable: 4996)
+
+struct point
+{
+	int xpos;
+	int ypos;
+};
+
+void main()
+{
+	struct point arr[3];
+
+	for (int i = 0; i < 3; i++)
+	{
+		printf("arr[%d].xpos = ",i);
+		scanf("%d", &(arr[i].xpos));
+		printf("arr[%d].ypos = ", i);
+		scanf("%d", &(arr[i].ypos));
+	}
+	printf("\n");
+
+	//printf
+	for (int i = 0; i < 3; i++)
+	{
+		printf("arr[%d].xpos= %d ", i, arr[i].xpos);
+		printf("arr[%d].ypos= %d ", i, arr[i].ypos);
+	}
+	return 0;
+}
+
+arr[0].xpos = 1
+arr[0].ypos = 2
+arr[1].xpos = 3
+arr[1].ypos = 4
+arr[2].xpos = 5
+arr[2].ypos = 6
+
+arr[0].xpos= 1 arr[0].ypos= 2
+ arr[1].xpos= 3 arr[1].ypos= 4
+ arr[2].xpos= 5 arr[2].ypos= 6
+_______________________________________________________________________________________________
+struct point
+{
+	int xpos;
+	int ypos;
+};
+
+void main()
+{
+	struct point pos1 = { 10,20 };
+	struct point pos2 = { 100,200 };
+
+	struct point* pptr = &pos1;
+	(*pptr).xpos += 4;
+	(*pptr).ypos += 5;
+	printf("[%d %d]\n", pptr->xpos, pptr->ypos);
+
+	pptr = &pos2;
+	pptr->xpos += 1;
+	pptr->ypos += 2;
+	printf("[%d %d]", (*pptr).xpos, (*pptr).ypos);
+
+	return 0;
+}
+
+[14 25]
+[101 202]
+______________________________________________________________________
+#include <stdio.h>
+#include <string.h>
+#pragma warning (disable: 4996)
+
+struct point
+{
+	int xpos;
+	int ypos;
+};
+struct circle
+{
+	double radius;
+	struct point* center;
+};
+
+void main()
+{
+	struct point cen = { 2, 7 };
+	double rad = 5.5;
+
+	struct circle ring = { rad, &cen };
+	printf("원의 반지름: %g\n", ring.radius);
+	printf("원의 중심[%d %d] \n", (ring.center)->xpos, (ring.center)->ypos);
+
+
+	return 0;
+}
+
+________________________________________________________________________________
+#include <stdio.h>
+#include <string.h>
+#pragma warning (disable: 4996)
+
+struct point
+{
+	int xpos;
+	int ypos;
+	struct point* ptr;
+};
+
+
+void main()
+{
+	struct point pos1= {1, 1};
+	struct point pos2 = { 2,2 };
+	struct point pos3 = { 3,3 };
+
+	pos1.ptr = &pos2;
+	pos2.ptr = &pos3;
+	pos3.ptr = &pos1;
+
+	printf("점들 연결관계\n");
+	printf("pos1.xpos= %d pos1.ypos= %d\n", pos1.xpos, pos1.ypos);
+	printf("(pos1.ptr)->xpos =%d (pos1.ptr)->ypos= %d\n", (pos1.ptr)->xpos, (pos1.ptr)->ypos);
+	printf("\n");
+	printf("pos2.xpos= %d pos2.ypos= %d\n", pos2.xpos, pos2.ypos);
+	printf("(pos2.ptr)->xpos =%d (pos2.ptr)->ypos= %d\n", (pos2.ptr)->xpos, (pos2.ptr)->ypos);
+	printf("\n");
+	printf("pos3.xpos= %d pos3.ypos= %d\n", pos3.xpos, pos3.ypos);
+	printf("(pos3.ptr)->xpos =%d (pos3.ptr)->ypos= %d\n", (pos3.ptr)->xpos, (pos3.ptr)->ypos);
+
+
+	
+	return 0;
+}
+점들 연결관계
+pos1.xpos= 1 pos1.ypos= 1
+(pos1.ptr)->xpos =2 (pos1.ptr)->ypos= 2
+
+pos2.xpos= 2 pos2.ypos= 2
+(pos2.ptr)->xpos =3 (pos2.ptr)->ypos= 3
+
+pos3.xpos= 3 pos3.ypos= 3
+(pos3.ptr)->xpos =1 (pos3.ptr)->ypos= 1
+______________________________________________________________________________________________________________________
+문제 22-1
+#include <stdio.h>
+#include <string.h>
+#pragma warning (disable: 4996)
+
+struct employee
+{
+	char name[20];
+	char sNum[20];
+	int money;
+};
+
+int main(void)
+{
+	struct employee man;
+	printf("종업원 이름: "); gets(man.name);
+	printf("종업원 주민번호: "); gets(man.sNum);
+	printf("종업업 급여: "); scanf("%d", &man.money);
+
+	printf("종업원 정보: %s %s %d", man.name, man.sNum, man.money);
+
+	return 0;
+}
+________________________________________________________________________________________
+문제22-2
+#include <stdio.h>
+#include <string.h>
+#pragma warning (disable: 4996)
+
+struct employee
+{
+	char name[20];
+	char sNum[20];
+	int money;
+};
+
+int main(void)
+{
+	struct employee arr[3];
+	//입력 받기
+	for (int i = 0; i < 3; i++)
+	{
+		printf("종업원 %d: ", i+1); 
+		scanf("%s",arr[i].name);
+		printf("종업원 주민번호: "); 
+		scanf("%s",arr[i].sNum);
+		printf("종업업 급여: "); 
+		scanf("%d", &arr[i].money);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		printf("종업원 %d 정보: %s / %s / %d\n",i+1, arr[i].name, arr[i].sNum, arr[i].money);
+	}
+
+	return 0;
+}
+_____________________________________________________________________________________________________________________

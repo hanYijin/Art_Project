@@ -1,0 +1,225 @@
+메소드 함수 문제 6-2
+public class Ex04 {
+	public static void main(String[]args){
+		for(int i=1;i<=100;i++){
+			if(che(i)){
+				System.out.println(i);
+			}
+		}
+	}
+	public static boolean che(int a){
+		if(a==1){
+			return false;
+		}
+		for (int i=2; i<a; i++)
+			if (a%2==0)
+				return false;
+		return true;
+	}
+		
+}
+___________________________________________________________________________________________
+클래스 이해하기
+
+class B{
+	public int a =10;
+	public int b= 20;
+	public void doA(){
+		System.out.println("doA 메서드 입니다.");
+	}
+}
+public class Ex07{
+	public static void main(String[] args){
+			B b = new B ();
+			System.out.println("b.a= "+ b.a);
+			System.out.println("b.b= "+ b.b);
+			b.doA();
+		}
+	}
+
+b.a= 10
+b.b= 20
+doA 메서드 입니다.
+_________________________________________________________________________________________________
+
+public class Ex08 {
+	int a=10;
+	public void doA(){
+		a++;
+	}
+	public void doB(){
+		a=20;
+	}//클래스 선언
+	
+	public static void main(String[]args){
+		Ex08 e8 = new Ex08();//참조변수 e8 선언, 새 인스턴스 새성
+		System.out.println("e8.a= "+e8.a);
+		e8.doA();// 증감 연산 인스턴스 메소드 호출
+		System.out.println("e8.a= "+e8.a);
+		e8.doB();
+		System.out.println("e8.a= "+e8.a);
+	}
+}
+
+e8.a= 10
+e8.a= 11
+e8.a= 20
+____________________________________________________________________________________________________________
+
+class Cc{
+	int a =10;
+	int b= 20;
+	public void doPrint(){
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+	}
+}
+public class Ex09 {
+	public static void main(String[]args){
+		System.out.println("c1.........");
+		Cc c1 = new Cc();
+		c1.doPrint();
+		c1.a=30;
+		c1.doPrint();
+		System.out.println("c2........");
+		Cc c2 =new Cc();
+		c2.doPrint();
+		c2.b=40;
+		c2.doPrint();
+	}
+
+}
+
+c1.........
+a= 10
+b= 20
+a= 30
+b= 20
+c2........
+a= 10
+b= 20
+a= 10
+b= 40
+____________________________________________________________________
+public class Account {
+	int al;
+	
+	public void setAl(int value){//al설정
+		al= value;
+	}
+	
+	public void printAl(){//al 출력
+		System.out.println("al= "+al);
+	}
+}
+
+public class Bank {
+	public static void main(String[] args) {
+		Account yoon;
+		Account han;
+		yoon= new Account();
+		han = new Account(); // 참조변수 선언, 새 인스턴스 생성
+		
+		yoon.printAl();
+		han.printAl();
+		
+		yoon.setAl(1000);
+		han.setAl(10000);
+		
+		yoon.printAl();
+		han.printAl();
+		
+	}
+		
+}
+
+al= 0
+al= 0
+al= 1000
+al= 10000
+_____________________________________________________________________________________________________
+public class Account {
+	String name;
+	int al;
+	public void setName(String a){
+		name= a;
+	}
+	public void setAl(int value){//al설정
+		al= value;
+	}
+	
+	public void printAl(){//al 출력
+		System.out.println("name= "+name);
+		System.out.println("al= "+al);
+	}
+}
+public class Bank {
+	public static void main(String[] args) {
+		Account yoon;
+		Account han;
+		yoon= new Account();
+		han = new Account(); // 참조변수 선언, 새 인스턴스 생성
+		
+		yoon.printAl();
+		han.printAl();
+		
+		yoon.setName("윤");
+		han.setName("한");
+		
+		yoon.setAl(1000);
+		han.setAl(10000);
+		
+		yoon.printAl();
+		han.printAl();
+		
+	}
+		
+}
+name= null
+al= 0
+name= null
+al= 0
+name= 윤
+al= 1000
+name= 한
+al= 10000
+_____________________________________________________________________________________________
+class AA{
+	int a =10;
+	public void doA(BB b){
+		b.b=30;
+	}
+}
+class BB{
+	int b=20;
+	public void doB(AA a){
+		a.a=40;
+	}
+}
+
+public class Ex10 {
+	public static void main(String[] args) {
+		
+		AA aa =new AA();
+		BB bb =new BB();
+		
+		AA aa1 =new AA();
+		BB bb1 =new BB();
+		
+		System.out.println("aa.a= "+aa.a);
+		System.out.println("bb.b= "+bb.b);
+		aa.doA(bb1);
+		bb.doB(aa1);
+		
+		System.out.println("aa1.a= "+aa1.a);
+		System.out.println("bb1.b= "+bb1.b);
+		
+		
+	}
+
+}
+aa.a= 10
+bb.b= 20
+aa1.a= 40
+bb1.b= 30
+___________________________________________________________________________

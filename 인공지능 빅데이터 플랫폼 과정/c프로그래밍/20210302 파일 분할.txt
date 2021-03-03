@@ -1,0 +1,45 @@
+매트로 선행처리
+#include<stdio.h>
+#define ADD 1
+#define SQUARE(x) ((x)*(x))
+void main()
+{
+    int a =10+ADD;
+    printf("a= %d\n", a);
+
+    printf("SQUARE = %d \n", SQUARE(5));
+    printf("SQUARE= %d \n",SQUARE(3+2));
+}
+a= 11
+SQUARE = 25
+SQUARE= 25
+
+cal.h
+int c_square();
+
+cal.c 
+int c_square(int x)
+{ 
+	return x*x;
+}
+
+ex03.c
+#include<stdio.h>
+#include"cal.h"
+void main()
+{
+    int x;
+    int area;
+    printf("사각형의 넓이를 구합니다. 길이 입력: ");
+    scanf("%d", &x);
+
+    area= c_square(x);
+    printf("area= %d \n",area);
+}
+
+D:\MyFirstRepository_20210125\C_work21\20210302>gcc -o ex03.exe ex03.c cal.h cal.c
+
+D:\MyFirstRepository_20210125\C_work21\20210302>ex03.exe
+
+사각형의 넓이를 구합니다. 길이 입력: 3
+area= 9

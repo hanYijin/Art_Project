@@ -1,0 +1,61 @@
+Microsoft Windows [Version 10.0.19042.631]
+(c) 2020 Microsoft Corporation. All rights reserved.
+
+C:\Users\KB>sqlplus system/1234  /* SQL프로그램 사용 시용자계정 / 비밀번호*/
+
+SQL*Plus: Release 11.2.0.2.0 Production on 금 2월 26 10:16:13 2021
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> show user: // 사용자 계정 확인
+USER is "SYSTEM"   // 사용자 계정을 위에서 system으로 해서 현재 사용자 계정은 "SYSTEM"
+SP2-0158: unknown SHOW option ":"
+SQL> show user;  // 명령어 뒤는 세미 콜론 사용!
+USER is "SYSTEM"
+SQL> create user ai identified by 1234; // 사용자 계정 'ai' 만들겠다는 명령어 by 뒤에는 접근 비밀번호 
+
+User created.  // 사용자 계정 만들어짐을 알려줌
+
+SQL> conn ai/1234  // 사용자 계정"ai"로 연결
+ERROR:  // 오류 발생: 사용자 계정에 대한 권한을 주지 않았기 때문
+ORA-01045: user AI lacks CREATE SESSION privilege; logon denied
+
+Warning: You are no longer connected to ORACLE.
+SQL> show user
+USER is ""
+SQL> conn system/1234  // 다시 "system계정으로 연결하여 
+Connected.
+SQL> show user; // 연결 확인하고
+USER is "SYSTEM"
+SQL> grant connect, resource to ai; // 사용자 계정 "ai" 생성 
+
+Grant succeeded.
+
+SQL> conn ai/1234 //conn: connect(연결시키다) 
+Connected.
+SQL> create table test( id varchar2(10), age number(3));
+
+Table created.
+
+SQL>SQL> select * from user_tables;
+
+____________________________________________________________
+이론
+create table tablename( columnName datatype, .....)
+// 만들다 테이블 테이블명(필드 이름 데이터 타입)
+-------------------------------------------------------
+예시) 회원정보 테이블 생성 
+SQL> create table Member_Shop(
+	customerNo number(6,0) primary key,  //primary key 기본키 
+	customerName varchar2(20) not null, 
+	phone varchar2(13), 
+	address varchar2(60), 
+	joindate date, 
+	grade char(1), 
+	city varchar2(10));
+
+Table created. // 테이블이 만들어짐을 알려줌.

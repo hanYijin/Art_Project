@@ -1,0 +1,166 @@
+20210222
+#include<stdio.h>
+#include<string.h>
+#pragma warning (disable: 4996)
+
+void main() {
+	FILE* fp1 = fopen("a.txt", "wt");
+
+	fputc('A', fp1);
+	fputc('B', fp1);
+	fputc('C', fp1);
+
+	fclose(fp1);
+}
+
+D:\>cd D:\새 폴더\MyFirstRepository_20210125\C_work21\20210222
+
+D:\새 폴더\MyFirstRepository_20210125\C_work21\20210222>dir
+ D:\새 폴더\MyFirstRepository_20210125\C_work21\20210222 디렉터리
+
+2021-02-22  오전 10:02    <DIR>          .
+2021-02-22  오전 10:02    <DIR>          ..
+2021-02-22  오전 10:11               204 Ex01.c
+               1개 파일                 204 바이트
+               2개 디렉터리  38,671,405,056 바이트 남음
+
+D:\새 폴더\MyFirstRepository_20210125\C_work21\20210222>cl Ex01.c
+D:\새 폴더\MyFirstRepository_20210125\C_work21\20210222>Ex01.exe
+
+#include<stdio.h>
+int main ()
+{
+    int ch;
+    FILE*fp=fopen("a.txt", "rt");
+    if(fp==NULL){
+        puts("No file");
+        return -1;
+    }
+    for(int i=0; i<3; i++){
+        ch= fgetc(fp);
+        printf("ch= %c \n", ch);
+    }
+    fclose(fp);
+    return 0;
+}
+
+D:\새 폴더\MyFirstRepository_20210125\C_work21\20210222>cl ex03.c
+x86용 Microsoft (R) C/C++ 최적화 컴파일러 버전 19.28.29335
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+ex03.c
+Microsoft (R) Incremental Linker Version 14.28.29335.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:ex03.exe
+ex03.obj
+
+D:\새 폴더\MyFirstRepository_20210125\C_work21\20210222>ex03.exe
+ch= A
+ch= B
+ch= C
+______________________________________________________________________________________
+#include<stdio.h>
+int main(void)
+{
+    char a[30];
+
+    int ch;
+    FILE*fp=fopen("simpel.txt","wt");
+
+    if(fp==NULL)
+    {
+        printf("파일 생성 오픈 실패");
+        return -1;
+    }
+    fputc('A',fp);
+    fputc('A',fp);
+    fputc('\n',fp);
+    fputs("ABCD한글 \n", fp);
+    fputs("ABCD 한글 \n",fp);
+    fclose(fp);
+    return 0;
+}
+
+simple.txt
+AA
+ABCD한글
+ABCD 한글
+______________________________________________________
+#include<stdio.h>
+int main(void)
+{
+    FILE*fp=fopen("yj.txt","wt");
+    if(fp==NULL){
+        puts("파일 오픈 실패");
+        return -1;
+    }
+    fputc('Y',fp);
+    fputc('J',fp);
+    fputc('\n',fp);
+    fputs("HanYijin\n", fp);
+    fputs("yijin\n", fp);
+    fclose(fp);
+    return 0;
+}
+"yj.txt"
+YJ
+HanYijin
+yijin
+--------------------------------------------------------
+#include<stdio.h>
+int main(void)
+{
+    char str[30];
+    int ch;
+    FILE*fp=fopen("yj.txt","rt");
+    if(fp==NULL)
+    {
+        puts("파일 오픈 실패");
+        return -1;
+    }
+    ch=fgetc(fp);
+    printf("%c\n",ch);
+    ch=fgetc(fp);
+    printf("%c\n",ch);
+    ch=fgetc(fp);
+    printf("%c\n",ch);
+    fgets(str,sizeof(str),fp);
+    printf("%s",str);
+    fgets(str,sizeof(str),fp);
+    printf("%s",str);
+    
+    fclose(fp);
+    return 0;
+    
+
+}
+
+Y
+J
+
+
+HanYijin
+yijin
+___________________________________________________
+#include<stdio.h>
+int main()
+{
+    FILE *fp= fopen("mystory2.txt", "wt");
+    char a[50];
+    printf("이름 입력하세요\n");
+    fgets(a,sizeof(a),stdin);
+    fputs("#이름: ", fp);
+    fputs(a,fp);
+
+     printf("주민번호 입력하세요\n");
+    fgets(a,sizeof(a),stdin);
+    fputs("#주민번호: ", fp);
+    fputs(a,fp);
+
+     printf("전화번호 입력하세요\n");
+    fgets(a,sizeof(a),stdin);
+    fputs("#전화번호: ", fp);
+    fputs(a,fp);
+
+}

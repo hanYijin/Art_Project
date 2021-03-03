@@ -1,0 +1,108 @@
+static 변수
+public class Ex01 {
+	static int a =10;
+	Ex01(){
+		System.out.println("a++= "+ (a++));
+	}
+	public static void main(String[] args) {
+		Ex01 e1 =new Ex01();
+		Ex01 e2 =new Ex01();
+		Ex01 e3 =new Ex01();
+		System.out.println("Ex01.a= "+Ex01.a);
+	}
+
+}
+
+a++= 10
+a++= 11
+a++= 12
+Ex01.a= 13
+
+public class Ex01 {
+	static int a =10;
+	Ex01(){
+		System.out.println("a++= "+ (a++));
+	}
+	public static void main(String[] args) {
+		Ex01 e1 =new Ex01();
+		System.out.println("e1.a= "+e1.a);
+		Ex01 e2 =new Ex01();
+		System.out.println("e2.a= "+e2.a);
+		Ex01 e3 =new Ex01();
+		System.out.println("e3.a= "+e3.a);
+		System.out.println("Ex01.a= "+Ex01.a);
+	}
+
+}
+a++= 10
+e1.a= 11
+a++= 11
+e2.a= 12
+a++= 12
+e3.a= 13
+Ex01.a= 13
+
+class AccessWay{
+	public static int a=10;
+	public AccessWay(){
+		inCreA();
+	}
+	public void inCreA(){
+		a++;
+	}
+}
+public class Ex02 {
+	public static void main(String[] args) {
+		AccessWay aw = new AccessWay();
+		System.out.println(aw.a);
+		System.out.println(AccessWay.a);
+		AccessWay.a++;
+		System.out.println(aw.a);
+		System.out.println(AccessWay.a);
+	}
+
+}
+11
+11
+12
+12
+class AccessWay{
+	public static int a=10;
+	public AccessWay(){
+		inCreA();
+	}
+	public void inCreA(){
+		a++;
+	}
+}// 같은 파일에 위치한 class AccessWay(.java)
+
+class A{
+	A(){
+		AccessWay.a++;
+		System.out.println("AccessWay.a= "+ AccessWay.a);
+	}
+}
+class B{
+	B(){
+		AccessWay.a++;
+		System.out.println("AccessWay.a= "+ AccessWay.a);
+	}
+}
+class C{
+	C(){
+		AccessWay.a++;
+		System.out.println("AccessWay.a= "+ AccessWay.a);
+	}
+	
+}
+public class Ex03 {
+	public static void main(String[] args) {
+		new A();
+		new B();
+		new C();
+	}
+
+}
+AccessWay.a= 11
+AccessWay.a= 12
+AccessWay.a= 13
