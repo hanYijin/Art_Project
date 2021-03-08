@@ -1,0 +1,226 @@
+static 선언
+클래스 변수
+
+
+class StaticValues{
+	static int A =10;
+	int b=20;
+}
+	class A{
+		public void doPrintStaticA(){
+			System.out.println("SV.a= "+StaticValues.A++);
+//			System.out.println("SV.b= "+StaticValues.b++); // error
+			StaticValues sv = new StaticValues();
+			System.out.println("SV.b= "+sv.b++);
+		}
+	}
+	class B{
+		public void doPrintStaticA(){
+			System.out.println("SV.a= "+StaticValues.A++);
+		}
+	}
+		/*데이터 영역, 스택영역, 힘영역
+		 * 데이터영역:값을 저장 프로그램 종료시까지
+		 * 스택영역:함수에서 기본변수를 선언시 사용 함수 종료할때 메모리에서 삭제
+		 * 힙영역: malloc, calloc, realloc free 개발자가 사용해서 직접..메모리 할당  및 삭제
+		 */
+public class Ex01 {
+	public static void main(String[] args) {
+		
+		A a= new A();
+		a.doPrintStaticA();
+		
+		B b= new B();
+		b.doPrintStaticA();
+	
+		System.out.println("SV.a= "+StaticValues.A);
+	}
+}
+
+SV.a= 10
+SV.b= 20
+SV.a= 11
+SV.a= 12
+
+클래스 메소드
+public class Ex02 {
+	public static void main(String[] args) {
+		doA(); // error
+		doB();
+	}
+	public void doA(){
+		System.out.println("A함수입니다.");
+	}
+	public static void doB(){
+		System.out.println("B함수입니다.");
+	}
+
+}
+Exception in thread "main" java.lang.Error: Unresolved compilation problem: 
+	Cannot make a static reference to the non-static method doA() from the type Ex02
+
+	at Ex02.main(Ex02.java:4)
+
+public class Ex02 {
+	public static void main(String[] args) {
+		//doA();
+		doB();
+		Ex02 e2= new Ex02();
+		e2.doA();
+	}
+	public void doA(){
+		System.out.println("A함수입니다.");
+	}
+	public static void doB(){
+		System.out.println("B함수입니다.");
+	}
+
+}
+B함수입니다.
+A함수입니다.
+
+class Test{
+	public static void main(String[] args) {
+		Ex02.doB();
+//		Ex02.doA();
+		Ex02 t1=new Ex02();
+		t1.doA();
+		
+	}
+}
+B함수입니다.
+A함수입니다.
+
+class Printer{
+	public void doA(){
+		System.out.println("doA함수");
+	}
+	public void doB(){
+		System.out.println("doB함수");
+	}
+	public static void doC(){
+		System.out.println("doc함수");
+	}
+	public static void doD(){
+		System.out.println("doD함수");
+	}
+}
+public class Ex03 {
+	public static void main(String[] args) {
+//		Printer.doA();		
+		Printer pi = new Printer();//외부 클래스의 메소드 호출은 메모리공간을 할당하고 그 참조 변수를 통해 메소드를 호출
+		pi.doA();
+//		Printer.doB();
+		pi.doB();
+		
+		pi.doC();
+		pi.doD();
+		Printer.doC();// 클래스 이름으로 클래스메소드 호툴하는 것이 표준이다..
+		Printer.doD();
+	}
+
+}
+
+
+public class Ex04 {
+	int a =10;
+	
+	public static void doA(int n){
+		a+=n; // error
+	}
+	public static void main(String[] args) {
+		doA(5);
+	}
+}
+
+public class Ex04 {
+	static int a =10;
+	
+	public static void doA(int n){
+		a+=n; 
+	}
+	public static void main(String[] args) {
+		doA(5);
+	}
+}
+
+public class Ex04 {
+	static int a =10;
+//	int a =10;
+	static int b=10;
+	public static int doA(int n){
+		a+=n; 
+		b+=n;
+		return b;
+	}
+	public static void main(String[] args) {
+		int b= doA(5);
+		System.out.println(a);
+		System.out.println(b);
+	}
+}
+
+
+System.out.println()이해
+
+import java.lang.*;
+class AAA{
+	public static void doA(String a){
+		System.out.println(a);
+	}
+}
+public class Ex06{
+	public static AAA a = new AAA();
+	public static void main(String[] args) {
+		System.out.println("test");
+		Ex06.a.doA("test");
+		
+	}
+
+}
+
+
+import java.lang.*;
+class AAA{
+	public static void doA(String a){
+		System.out.println(a);
+	}
+}
+class SystemTest{
+	public static void printTest(String a){
+		System.out.println(a);
+		
+		
+		
+	}
+}
+public class Ex06{
+	public static AAA a = new AAA();
+	public static SystemTest outtest = new SystemTest();
+	public static void main(String[] args) {
+		System.out.println("test");
+		Ex06.a.doA("test");
+		Ex06.outtest.printTest("ㅋㅋㅋㅋ");
+		SystemTest.printTest("aaaa");
+	}
+		
+}
+
+문제10-1
+public class Accumulator {
+	static int sum=0;
+	public static int add(int i){
+		sum+=i;
+		return sum;
+	}
+	public static void showResult(){
+		System.out.println("sum = "+ sum);
+	}
+	public static void main(String[] args) {
+		for(int i=0; i<10; i++)
+			Accumulator.add(i);
+		Accumulator.showResult();
+	}
+
+}
+sum = 45

@@ -1,0 +1,173 @@
+메소드 오버로딩 
+public class Ex07 {
+	public static void doA(int a){
+		System.out.println("a= "+a);
+	}
+	public static void doA(int a, int b){
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+	}
+	public static void main(String[] args) {
+		doA(5);
+		doA(5,10);
+	}
+
+}
+a= 5
+a= 5
+b= 10
+
+public class Ex07 {
+	Ex07(){}
+	Ex07(int a){System.out.println("a= "+a);}
+	public static void doA(int a){
+		System.out.println("a= "+a);
+	}
+	public static void doA(int a, int b){
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+	}
+	public static void main(String[] args) {
+		doA(5);
+		doA(5,10);
+		new Ex07();
+		new Ex07(10);
+		Ex07 e1 = new Ex07(20);
+	}
+
+}
+a= 5
+a= 5
+b= 10
+a= 10
+
+public class Ex07 {
+	int a=0;
+	int num;
+	Ex07(){}
+	Ex07(int n){ System.out.println(n);
+	num=n;
+	}
+	public void print(){
+		System.out.println(num);
+	}
+	public static void doA(int a){
+		System.out.println("a= "+a);
+	}
+	public static void doA(int a, int b){
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+	}
+	public static void main(String[] args) {
+		doA(5);
+		doA(5,10);
+		new Ex07();
+		new Ex07(10); //참조변수를 선언하지 않으면 메모리상에 할당되지 않는다
+		Ex07 e1= new Ex07();
+		e1.print();
+		
+	}
+
+}
+
+
+/*접근지시자: public procted defalut private
+ * static : 프로그램 시작과 종료시에 계속 상주
+ * 변수
+ * 메서드 
+ * 
+ * 생성자 오버로딩
+ * this 1. 생성자애서 호출 2.클래스변수를 참조할때 사용
+ * 
+ */
+
+class AAAA{
+	AAAA(){System.out.println("상위 클래스 생성자");}
+}
+public class Person extends AAAA{
+	private String name;
+	private int age;
+	
+	public Person(){
+//		super();
+		this("김길동", 33);
+	}
+	public Person(String n, int a){
+		super();
+		this.name=n;
+		this.age=a;
+		
+	}
+	public void doPrint(){
+		System.out.println("name: "+name);
+		System.out.println("age: "+age);
+		
+	}
+}
+
+public class Ex08 {
+	public static void main(String[] args) {
+		Person p1 = new Person();
+		Person p2 = new Person("홍길동", 30);
+		
+		p1.doPrint();
+		p2.doPrint();
+		
+ 	}
+
+}
+
+
+
+상위 클래스 생성자
+상위 클래스 생성자
+name: 김길동
+age: 33
+name: 홍길동
+age: 30
+
+
+package aaa;
+class AAAA{
+	protected int num; 
+	AAAA(){System.out.println("상위 클래스 생성자");}
+	public void print(){System.out.println(num);
+	}
+}
+public class Person extends AAAA{
+	protected String name;
+	protected int age;
+	
+	public Person(){
+//		super();
+//		this("김길동", 33);
+	}
+	public Person(String n, int a){
+		super(); //상위(부모)클래스의 생성자를 호춞 
+		this.name=n;
+		this.age=a;
+		
+	}
+	public void doPrint(){
+		System.out.println("name: "+name);
+		System.out.println("age: "+age);
+		
+	}
+}
+
+public class Ex08 extends aaa.Person {
+	public static void main(String[] args) {
+		aaa.Person p1 =new aaa.Person("홈",23);
+		p1.doPrint();
+		aaa.Person p2=new aaa.Person();
+		p2.doPrint();
+	
+	}
+ }
+상위 클래스 생성자
+name: 홈
+age: 23
+상위 클래스 생성자
+name: null
+age: 0
+
