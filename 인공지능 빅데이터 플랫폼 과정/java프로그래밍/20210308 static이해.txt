@@ -208,7 +208,7 @@ public class Ex06{
 
 문제10-1
 public class Accumulator {
-	static int sum=0;
+	private static int sum=0;
 	public static int add(int i){
 		sum+=i;
 		return sum;
@@ -224,3 +224,40 @@ public class Accumulator {
 
 }
 sum = 45
+
+
+
+public class Accumulator {
+	private static int sum = 1;
+	public static void add(int i){
+		sum+=i;
+	}
+	public static void showResult(){
+		System.out.println("sum= "+sum);
+	}
+
+}
+class BB{
+	public void doPro(){
+		for(int i=0;i<10;i++){
+			Accumulator.add(i);
+		}
+		Accumulator.showResult();
+		
+	}
+}
+public class Ex09 {
+	Ex09(){
+		BB b = new BB();
+		b.doPro();
+	}
+	public static void main(String[] args) {
+//		for(int i=0;i<10;i++){
+//			Accumulator.add(i);
+//		}
+//		Accumulator.showResult();
+		new Ex07();
+		
+	}
+}
+

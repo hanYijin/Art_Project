@@ -1,0 +1,129 @@
+콘솔 출력
+class Box{
+	private String content;
+	Box(){}//
+	Box(String content){
+		this.content = content;
+	}
+	
+	
+}
+/*
+ *import java.lang.*
+ *toString() 생략
+ *기본생성자 생략
+ *this 생략
+ */
+public class Ex10 {
+	public static void main(String[] args) {
+		StringBuilder stb = new StringBuilder("12");
+		stb.append("34");
+		System.out.println(stb.toString());
+		System.out.println(stb);
+		
+		Box box =new Box("apple");
+		System.out.println(box);
+		System.out.println(box.toString());
+		
+		
+		
+	}
+
+}
+1234
+1234
+Box@7852e922
+Box@7852e922
+
+콘솔 입력
+
+a.txt=> 1 2 3 
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Ex11 {
+	public static void main(String[] args) throws FileNotFoundException {
+		Scanner scan = new Scanner (new File("a.txt")); // 파일 입력: 파일 내용 읽어오기
+		int a =scan.nextInt();
+		int b = scan.nextInt();
+		int c = scan.nextInt();
+		
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+		System.out.println("c= "+c);
+		scan.close();
+	}
+
+}
+a= 1
+b= 2
+c= 3
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Ex11 {
+	public static void main(String[] args) throws FileNotFoundException {
+		Scanner scan = new Scanner(System.in); // 키보드 입력
+		int a =scan.nextInt();
+		int b = scan.nextInt();
+		int c = scan.nextInt();
+		
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+		System.out.println("c= "+c);
+		scan.close();
+	}
+
+}
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Ex12 {
+	public static void main(String[] args) throws FileNotFoundException {
+		Scanner scan = new Scanner(new File("src/c.txt"));
+		String a = scan.nextLine();
+		String b= scan.nextLine();
+		String c= scan.nextLine();
+		String d= scan.nextLine();
+		String e= scan.nextLine();
+		String f= scan.nextLine();
+		
+		System.out.println("a= "+ a);
+		System.out.println("b= "+ b);
+		System.out.println("c= "+ c);
+		System.out.println("d= "+ d);
+		System.out.println("e= "+ e);
+		System.out.println("f= "+ f);
+		}
+	}
+
+	a= a
+b= b
+c= c
+d= d
+e= e
+f= 한글되나
+
+import java.io.FileOutputStream;
+import java.io.IOError;
+import java.io.IOException;
+import java.io.OutputStream;
+
+
+public class Ex13 {
+	public static void main(String[] args) throws IOException{
+		OutputStream os = new FileOutputStream("src/d.txt");
+		String test = "안녕하세요";
+		byte[] atest_byte = test.getBytes();
+		os.write(atest_byte);
+		os.close();
+	}
+
+}
+"d.txt" 파일 생성되고 "안녕하세요" 가 파일 출력
