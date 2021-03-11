@@ -1,0 +1,42 @@
+package DB;
+
+import java.util.Scanner;
+
+public class STUTBL {
+	public static int idnum;
+	public static String sname;
+	public static String sgroup;
+	public static String sex;
+	public static int age;
+	
+	public STUTBL(int id, String n, String g, String s, int a ){
+		idnum=id;
+		sname=n;
+		sgroup=g;
+		sex=s;
+		age=a;
+	}
+	public static void intPut(){
+		Scanner scan = new Scanner(System.in);
+
+			System.out.println("학번: ");
+			idnum = scan.nextInt();
+			scan.nextLine();
+			System.out.println("이름: ");
+			sname = scan.nextLine();
+			System.out.println("반: ");
+			sgroup = scan.nextLine();
+			System.out.println("성별: ");
+			sex=scan.nextLine();
+			System.out.println("나이: ");
+			age= scan.nextInt();
+	}
+	public void print(){
+		System.out.println("학번: "+idnum); 
+		System.out.println("이름: "+sname); 
+		System.out.println("반: "+sgroup); 
+		System.out.println("성별: "+sex);
+		System.out.println("나이: "+age); 
+	}
+
+}

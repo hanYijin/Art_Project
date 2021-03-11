@@ -1,0 +1,85 @@
+package DB;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+public class Insert {
+	
+	public static void main(String[] args) {
+		Connection conn =null;//세션을 담는 객체
+		PreparedStatement pstm =null;//쿼리문을 나타내는 객체
+		ResultSet rs = null;//쿼리문에 대한 반환값을 담는 변수
+		
+		try{
+			int count=0;
+			STUTBL[] stutbl = new STUTBL[5];//10명의 학생 정보 입력
+			conn = DBConnection.getConnection();//프로시저 호출
+			CallableStatement cs = conn.prepareCall("begin add_STUTBL(?,?,?,?,?); end;");
+
+			 
+//			STUTBL.intPut();
+//			 cs.setInt(1, STUTBL.idnum);
+//			 cs.setString(1, STUTBL.sname);
+//			 cs.setString(1, STUTBL.sgroup);
+//			 cs.setString(1, STUTBL.sex);
+//			 cs.setInt(1, STUTBL.age);
+			 System.out.println("학생정보를 입력하세요>>>");
+			 STUTBL.intPut();
+			 cs.setInt(1, STUTBL.idnum);
+			 cs.setString(2, STUTBL.sname);
+			 cs.setString(3, STUTBL.sgroup);
+			 cs.setString(4, STUTBL.sex);
+			 cs.setInt(5, STUTBL.age);
+			 
+			 
+//			for(int i=1;i<6;i++){
+//				System.out.println("학번: ");
+//				int idnum = scan.nextInt();
+//				cs.setInt(i, idnum);
+//				scan.nextLine();
+//				System.out.println("이름: ");
+//				String sname = scan.nextLine();
+//				cs.setString(i, sname);
+//				System.out.println("반: ");
+//				String sgroup = scan.nextLine();
+//				cs.setString(i, sgroup);
+//				System.out.println("성별: ");
+//				String sex=scan.nextLine();
+//				cs.setString(i, sex);
+//				System.out.println("나이: ");
+//				int age= scan.nextInt();
+//				cs.setInt(i, age);
+//			}
+				
+				int seq=cs.executeUpdate();
+				
+				if(seq==0){
+					System.out.println("값: "+seq);
+				}
+				else{
+					System.out.println("값: "+seq);
+				}
+				 cs.close();
+				 conn.close();
+				 } catch(Exception e){
+				 e.printStackTrace();
+				 }
+				finally{
+					//DB 연결을 종료한다.
+					//모든 프로시저 마지막에 추가
+					try{
+						if(rs!=null){rs.close();}
+						if(pstm !=null){pstm.close();}
+						if(conn !=null){conn.close();}
+					}catch(Exception e){
+						throw new RuntimeException(e.getMessage());
+					}
+				}
+			
+		}
+	}
+
+
