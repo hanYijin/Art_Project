@@ -1,0 +1,69 @@
+--학생 테이블 생성
+CREATE table STUTBL --학생테이블
+(idnum CHAR(8) primary key, --학번
+sname NVARCHAR2(10) not null, --학생이름
+sgroup nchar(4) not null,-- 학생 반 (그룹)
+sex char(2),-- 성별
+age number(2));--나이
+
+drop procedure add_STUTBL;
+
+--insert 프로시저
+create or replace procedure add_STUTBL
+    ( p_idnum   stutbl.idnum%type
+    ,p_sname    stutbl.sname%type
+    ,p_sgroup   stutbl.sgroup%type
+    ,p_sex      stutbl.sex%type
+    ,p_age      stutbl.age%type
+    )
+Is
+BEGIN
+    insert into stutbl (idnum, sname, sgroup, sex, age)
+    values(p_idnum, p_sname, p_sgroup, p_sex, p_age);
+    commit;
+END add_STUTBL;
+
+--delete 프로시저
+create or replace PROCEDURE del_STUTBL
+( p_idnum   stutbl.idnum%type)
+Is
+BEGIN
+    delete from stutbl where idnum=p_idnum;
+commit;
+END del_STUTBL;
+
+--update 프로시저
+create or replace procedure update_STUTBL
+(p_idnum    stutbl.idnum%type
+,p_sname    stutbl.sname%type
+,p_sgroup   stutbl.sgroup%type 
+,p_sex      stutbl.sex%type :='w/m'
+,p_age       stutbl.age%type default 0)
+Is
+BEGIN
+    update stutbl 
+    set
+    idnum = p_idnum
+    ,sname= p_sname
+    ,sgroup=p_sgroup
+    ,sex=p_sex
+    ,age=p_age
+    where idnum=p_idnum;
+    commit;
+END update_STUTBL;
+
+-- selectallcolumn 프로시저
+create or replace procedure selectall_STUTBL
+(p_cursor OUT SYS_REFCURSOR)
+is
+begin
+open p_cursor For
+select *
+From stutbl;
+--where idnum=p_idnum;
+ENd selectall_STUTBL;
+
+
+
+
+

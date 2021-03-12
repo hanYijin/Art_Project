@@ -1,0 +1,412 @@
+package DB;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBConnection {
+	
+	public static Connection dbConn;
+	
+	public static Connection getConnection()
+    {
+        Connection conn = null;
+        try {//비정상구문 변환? // DB 연결 
+            String user = "AI"; //사용자 이름
+            String pw = "1234"; //사용자 비밀번호
+            String url = "jdbc:oracle:thin:@localhost:1521:xe";
+            
+            Class.forName("oracle.jdbc.driver.OracleDriver");        
+            conn = DriverManager.getConnection(url, user, pw);
+            
+            System.out.println("Database에 연결되었습니다.\n"); 
+            
+        } catch (ClassNotFoundException cnfe) {
+            System.out.println("DB 드라이버 로딩 실패 :"+cnfe.toString());
+        } catch (SQLException sqle) {
+            System.out.println("DB 접속실패 : "+sqle.toString());
+        } catch (Exception e) {
+            System.out.println("Unkonwn error");
+            e.printStackTrace();
+        }
+        return conn;     
+    }
+
+}
+
+
+
+-------
+package DB;
+
+import java.util.Scanner;
+
+public class STUTBL {
+	public static int idnum;
+	public static String sname;
+	public static String sgroup;
+	public static String sex;
+	public static int age;
+	
+	public STUTBL(int id, String n, String g, String s, int a ){
+		idnum=id;
+		sname=n;
+		sgroup=g;
+		sex=s;
+		age=a;
+	}
+	public static STUTBL intPut(){
+			
+			Scanner scan = new Scanner(System.in);
+
+			System.out.println("학번: ");
+			idnum = scan.nextInt();
+			scan.nextLine();
+			System.out.println("이름: ");
+			sname = scan.nextLine();
+			System.out.println("반: ");
+			sgroup = scan.nextLine();
+			System.out.println("성별: ");
+			sex=scan.nextLine();
+			System.out.println("나이: ");
+			age= scan.nextInt();
+			STUTBL stu= new STUTBL(idnum,sname,sgroup, sex, age);
+			return stu;
+	}
+	public void print(){
+		System.out.println("학번: "+idnum); 
+		System.out.println("이름: "+sname); 
+		System.out.println("반: "+sgroup); 
+		System.out.println("성별: "+sex);
+		System.out.println("나이: "+age); 
+	}
+
+}
+----
+package DB;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class DBStart {
+//	public static Connection dbconn;
+//	
+//	public static Connection getConnection(){
+//		Connection conn= null;
+//		try{
+//			String user = "AI";
+//			String pw = "1234";
+//			String url="jdbc:oracle:thin:@localhost:1521:xe";
+//			
+//			Class.forName("oracle.jdbc.driver.OracleDriver");
+//			conn= DriverManager.getConnection(url, user, pw);
+//			
+//			System.out.println("Datebase에 연결되었습니다.\n");
+//		}
+//		catch (ClassNotFoundException cnfe) {
+//            System.out.println("DB 드라이버 로딩 실패 :"+cnfe.toString());
+//        } catch (SQLException sqle) {
+//            System.out.println("DB 접속실패 : "+sqle.toString());
+//        } catch (Exception e) {
+//            System.out.println("Unkonwn error");
+//            e.printStackTrace();
+//        }
+//        return conn;     
+//    }
+
+
+	public static void main(String[] args) {
+		
+		Connection conn =null;//세션을 담는 객체
+		PreparedStatement pstm =null;//쿼리문을 나타내는 객체
+		ResultSet rs = null;//쿼리문에 대한 반환값을 담는 변수
+		STUTBL[] stutbl = new STUTBL[5];
+		Scanner scan = new Scanner(System.in);
+		
+		
+		while(true){
+			System.out.println("1.insert 2. delete 3. update 4. select");
+			System.out.println("선택>>>");
+			int sel= scan.nextInt();
+			if(sel==1){
+				System.out.println("학생 정보를 입력하세요.(학번/이름/반/성별/나이)");
+				for(int i=0; i<stutbl.length; i++){
+					
+					Insert.insertDO();
+				}
+			}
+			
+			else if(sel==2){
+				System.out.println("학생 정보를 삭제합니다.");
+				Delete.deleteDo();
+			}
+			else if(sel==3){
+				System.out.println("학생 정보를 수정합니다.");
+				Update.upateDo();
+			}
+			else if(sel==4){
+				System.out.println("학생 정보를 출력합니다.");
+				Select.selectDo();
+//				 for (int j=0; j<stutbl.length; j++){
+//					 if(stutbl !=null){
+//						 stutbl[j].print();
+//					 }
+//				 }
+			}
+			else{
+				System.out.println("선택하신 사항은 없습니다.");
+				System.out.println("=====프로그램 종료=====");
+				break;
+			}
+						
+				
+			}
+		}
+	}
+
+
+----
+package DB;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+public class Insert {
+	
+	public static void insertDO() {
+		Connection conn =null;//세션을 담는 객체
+		PreparedStatement pstm =null;//쿼리문을 나타내는 객체
+		ResultSet rs = null;//쿼리문에 대한 반환값을 담는 변수
+		
+		try{
+			int count=0;
+			STUTBL[] stutbl = new STUTBL[5];//10명의 학생 정보 입력
+			conn = DBConnection.getConnection();//프로시저 호출
+			CallableStatement cs = conn.prepareCall("begin add_STUTBL(?,?,?,?,?); end;");
+
+			 
+			 System.out.println("학생정보를 입력하세요>>>");
+			 STUTBL.intPut();
+			 cs.setInt(1, STUTBL.idnum);
+			 cs.setString(2, STUTBL.sname);
+			 cs.setString(3, STUTBL.sgroup);
+			 cs.setString(4, STUTBL.sex);
+			 cs.setInt(5, STUTBL.age);
+			 
+			 
+//			for(int i=1;i<6;i++){
+//				System.out.println("학번: ");
+//				int idnum = scan.nextInt();
+//				cs.setInt(i, idnum);
+//				scan.nextLine();
+//				System.out.println("이름: ");
+//				String sname = scan.nextLine();
+//				cs.setString(i, sname);
+//				System.out.println("반: ");
+//				String sgroup = scan.nextLine();
+//				cs.setString(i, sgroup);
+//				System.out.println("성별: ");
+//				String sex=scan.nextLine();
+//				cs.setString(i, sex);
+//				System.out.println("나이: ");
+//				int age= scan.nextInt();
+//				cs.setInt(i, age);
+//			}
+				
+				int seq=cs.executeUpdate();
+				
+				if(seq==0){
+					System.out.println("값: "+seq);
+				}
+				else{
+					System.out.println("값: "+seq);
+				}
+				 cs.close();
+				 conn.close();
+				 } catch(Exception e){
+				 e.printStackTrace();
+				 }
+				finally{
+					//DB 연결을 종료한다.
+					//모든 프로시저 마지막에 추가
+					try{
+						if(rs!=null){rs.close();}
+						if(pstm !=null){pstm.close();}
+						if(conn !=null){conn.close();}
+					}catch(Exception e){
+						throw new RuntimeException(e.getMessage());
+					}
+				}
+			
+		}
+	}
+
+
+package DB;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+
+//import DB.DBConnection;
+
+
+
+public class Update {
+	public static void upateDo(){
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		 ResultSet rs = null;
+		
+		 try{
+			 int count =0;
+			 STUTBL[] stutbl = new STUTBL[20];
+			 conn=DBConnection.getConnection();
+			 CallableStatement cs = conn.prepareCall("begin update_STUTBL(?,?,?,?,?); end;");
+			 
+			 System.out.println("수정할 학생 정보를 입력하세요>>>");
+			 STUTBL.intPut();
+			 cs.setInt(1, STUTBL.idnum);
+			 cs.setString(2, STUTBL.sname);
+			 cs.setString(3, STUTBL.sgroup);
+			 cs.setString(4, STUTBL.sex);
+			 cs.setInt(5, STUTBL.age);
+			 
+			 int seq= cs.executeUpdate();
+			 
+			 if(seq==0)
+			 { System.out.println("값"+ seq);}
+			 else
+			 { System.out.println("값"+ seq);}
+			 
+			 cs.close();
+			 conn.close();
+		 } catch(Exception e){
+			 e.printStackTrace();
+			 }
+		 finally{
+				//DB 연결을 종료한다.
+				//모든 프로시저 마지막에 추가
+				try{
+					if(rs!=null){rs.close();}
+					if(pstm !=null){pstm.close();}
+					if(conn !=null){conn.close();}
+				}catch(Exception e){
+					throw new RuntimeException(e.getMessage());
+				}
+		 }
+	}
+
+}
+-----
+package DB;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+
+public class Select {
+	public static void selectDo(){
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		 ResultSet rs = null;
+		
+		 try{
+			 int i =0;
+			 STUTBL[] stutbl = new STUTBL[20];
+			 conn=DBConnection.getConnection();
+			 CallableStatement cs = conn.prepareCall("begin selectall_STUTBL(?); end;");
+			 cs.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
+			 cs.execute();
+			 rs=(ResultSet)cs.getObject(1);//(?) (물음표 개수)
+			 while(rs.next()){
+				 stutbl[i]=new STUTBL(rs.getInt("idnum"), rs.getString("sname"),rs.getString("sgroup"),
+						 rs.getString("sex"), rs.getInt("age"));
+				i++;
+			 }
+			 for (int j=0; j<stutbl.length; j++){
+				 if(stutbl !=null){
+					 stutbl[j].print();
+				 }
+			 }
+			 cs.close();
+			 conn.close();
+		 } catch(Exception e){
+			 e.printStackTrace();
+			 }
+		 finally{
+				//DB 연결을 종료한다.
+				//모든 프로시저 마지막에 추가
+				try{
+					if(rs!=null){rs.close();}
+					if(pstm !=null){pstm.close();}
+					if(conn !=null){conn.close();}
+				}catch(Exception e){
+					throw new RuntimeException(e.getMessage());
+				}
+		 }
+	}
+
+}
+------
+package DB;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+
+public class Delete {
+	public static void deleteDo(){
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		 ResultSet rs = null;
+		
+		 try{
+			 int count =0;
+			 STUTBL[] stutbl = new STUTBL[20];
+			 conn=DBConnection.getConnection();
+			 CallableStatement cs = conn.prepareCall("begin del_STUTBL(?); end;");
+			 
+			 System.out.println("삭제할 학번 입력하세요>>>");
+			 Scanner scan = new Scanner(System.in);
+			 int num = scan.nextInt();
+			 cs.setInt(1, num);
+			 int seq= cs.executeUpdate();
+			 
+			 if(seq==0)
+			 { System.out.println("값"+ seq);}
+			 else
+			 { System.out.println("값"+ seq);}
+			 
+			 cs.close();
+			 conn.close();
+		 } catch(Exception e){
+			 e.printStackTrace();
+			 }
+		 finally{
+				//DB 연결을 종료한다.
+				//모든 프로시저 마지막에 추가
+				try{
+					if(rs!=null){rs.close();}
+					if(pstm !=null){pstm.close();}
+					if(conn !=null){conn.close();}
+				}catch(Exception e){
+					throw new RuntimeException(e.getMessage());
+				}
+		 }
+	}
+
+}

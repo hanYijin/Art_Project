@@ -1,0 +1,89 @@
+package DB;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class DBStart {
+//	public static Connection dbconn;
+//	
+//	public static Connection getConnection(){
+//		Connection conn= null;
+//		try{
+//			String user = "AI";
+//			String pw = "1234";
+//			String url="jdbc:oracle:thin:@localhost:1521:xe";
+//			
+//			Class.forName("oracle.jdbc.driver.OracleDriver");
+//			conn= DriverManager.getConnection(url, user, pw);
+//			
+//			System.out.println("Datebase에 연결되었습니다.\n");
+//		}
+//		catch (ClassNotFoundException cnfe) {
+//            System.out.println("DB 드라이버 로딩 실패 :"+cnfe.toString());
+//        } catch (SQLException sqle) {
+//            System.out.println("DB 접속실패 : "+sqle.toString());
+//        } catch (Exception e) {
+//            System.out.println("Unkonwn error");
+//            e.printStackTrace();
+//        }
+//        return conn;     
+//    }
+
+
+	public static void main(String[] args) {
+		
+		Connection conn =null;//세션을 담는 객체
+		PreparedStatement pstm =null;//쿼리문을 나타내는 객체
+		ResultSet rs = null;//쿼리문에 대한 반환값을 담는 변수
+		STUTBL[] stutbl = new STUTBL[5];
+		Scanner scan = new Scanner(System.in);
+		
+		
+		while(true){
+			System.out.println("1.insert 2. delete 3. update 4. select");
+			System.out.println("선택>>>");
+			int sel= scan.nextInt();
+			if(sel==1){
+				System.out.println("학생 정보를 입력하세요.(학번/이름/반/성별/나이)");
+				for(int i=0; i<stutbl.length; i++){
+					
+					Insert.insertDO();
+				}
+			}
+			
+			else if(sel==2){
+				System.out.println("학생 정보를 삭제합니다.");
+				Delete.deleteDo();
+			}
+			else if(sel==3){
+				System.out.println("학생 정보를 수정합니다.");
+				Update.upateDo();
+			}
+			else if(sel==4){
+				System.out.println("학생 정보를 출력합니다.");
+				Select.selectDo();
+//				 for (int j=0; j<stutbl.length; j++){
+//					 if(stutbl !=null){
+//						 stutbl[j].print();
+//					 }
+//				 }
+			}
+			else if(sel==5){
+				Selertinout.selectinoutDo();
+			}
+			else{
+				System.out.println("선택하신 사항은 없습니다.");
+				System.out.println("=====프로그램 종료=====");
+				break;
+			}
+						
+				
+			}
+		}
+	}
+
+

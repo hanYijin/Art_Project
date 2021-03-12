@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.util.Scanner;
 
 public class Delete {
-	public static void main(String[] args) {
+	public static void deleteDo(){
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		 ResultSet rs = null;

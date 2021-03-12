@@ -26,6 +26,7 @@ public class Insert {
 //			 cs.setString(1, STUTBL.sgroup);
 //			 cs.setString(1, STUTBL.sex);
 //			 cs.setInt(1, STUTBL.age);
+
 			 System.out.println("학생정보를 입력하세요>>>");
 			 STUTBL.intPut();
 			 cs.setInt(1, STUTBL.idnum);
