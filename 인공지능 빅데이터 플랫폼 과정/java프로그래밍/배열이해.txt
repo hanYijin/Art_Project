@@ -328,9 +328,105 @@ public class Ex08 {
 22	33	
 444	555	666	
 
+문제 풀이
 
 
+public class Ex09 {
+	Ex09(){
+		int[] ar= {1,9,5,3,6,2};
+		System.out.println("최솟값= "+minValue(ar));
+		System.out.println("최댓값= "+maxValue(ar));
+	}
+	public static int minValue(int[] arr){
+		int min = arr[0];
+		for(int i=0; i<arr.length;i++){
+			if(min> arr[i]){
+				min= arr[i];
+			}
+		}
+		return min; 
+	}
+	public static int maxValue(int []arr){
+		int max = arr[0];
+		for(int i: arr){
+			if(max<i){
+				max=i;
+			}
+		}
+		return max;
+	}
+	public static void main(String[] args) {
+		new Ex09();
+	}
 
+}
+최솟값= 1
+최댓값= 9
 
+import java.util.Scanner;
 
+public class Ex10 {
+	Ex10(){}
+	public static void addOneDArr(int[] arr, int add){
+		for(int i=0; i<arr.length;i++){
+			arr[i]+=add;
+		}
+	}
+	public static void addTwoDArr(int[][] arr, int add){
+		for(int k[] : arr){
+				addOneDArr(k,add);
+		}
+	}
+	public static void arrPrint(int[][] arr){
+		for(int i=0; i<arr.length; i++){
+			for(int j=0; j<arr.length;j++){
+				System.out.print(arr[i][j]+"\t");
+			}
+			System.out.println();
+		}
+	}
+	public static void main(String[] args) {
+		
+		int[][] arr= {{1,2,3},{4,5,6},{7,8,9}};
+		System.out.println("증가하고 싶은 값 입력: ");
+		Scanner scan = new Scanner(System.in);
+		int add = scan.nextInt();
+		addTwoDArr(arr, add);
+		arrPrint(arr);
+	}
 
+}
+
+증가하고 싶은 값 입력: 
+
+5
+6	7	8	
+9	10	11	
+12	13	14	
+
+public class Ex11 {
+	public static void changeArr(int[][] arr){
+		int[][] temp= new int[arr.length][];
+		temp[0]=arr[0];
+		arr[0]=arr[2];
+		arr[2]=arr[1];
+		arr[1]=temp[0];
+	}
+	public static void arrPrint(int[][] arr){
+		for(int k[]:arr){
+			for(int a: k){
+				System.out.print(a+"\t");
+			}
+			System.out.println();
+		}
+	}
+	public static void main(String[] args) {
+		int[][] arr ={{1,2,3},{4,5,6},{7,8,9}};
+		changeArr(arr);
+		arrPrint(arr);
+		
+	}
+}
+7	8	9	
+1	2	3	
+4	5	6
