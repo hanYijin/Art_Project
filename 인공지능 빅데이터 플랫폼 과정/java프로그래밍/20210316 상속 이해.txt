@@ -1,0 +1,289 @@
+class A{
+	int a =20;
+	int b= 30;
+	public void doA(){
+		System.out.println("doA함수");
+	}
+}
+public class Ex01 extends A {
+	Ex01(){
+		System.out.println(a);
+		System.out.println(b);
+		doA();
+	}
+	public static void main(String[] args) {
+		new Ex01();
+	}
+
+}
+20
+30
+doA함수
+
+/*생략 가능 문법
+ * import java.lang*;
+ * this 생략가능
+ * 기본생성자 생략가능... 다른 생성자 선언시 생략 불가..
+ * 기본 생성자에서 super(); 상속받은 클래스 기본생성자 호출
+ */
+public class BusinessMan {
+	private String name;
+	BusinessMan(){
+		System.out.println("비지니스맨 생성자");
+	}
+	public void tellName(){
+		System.out.println("name: "+name);
+	}
+
+}
+public class Man extends BusinessMan{
+	private String company;
+	private String position;
+	Man(){
+		super();
+		System.out.println("맨 생성자");
+	}//생략가능
+	public void tellYourInfo(){
+		System.out.println("company "+company);
+		System.out.println("position "+position);
+		tellName();
+	}
+	public static void main(String[] args) {
+		Man man = new Man();
+		BusinessMan man2 =new BusinessMan();
+		man.tellYourInfo();
+		man.tellName();
+		man2.tellName();
+//		man2.tellYourInfo(); 오류
+	}
+}
+
+
+
+비지니스맨 생성자
+맨 생성자
+
+company null
+position null
+name: null
+name: null
+name: null
+
+
+
+/*생략 가능 문법
+ * import java.lang*;
+ * this 생략가능
+ * 기본생성자 생략가능... 다른 생성자 선언시 생략 불가..
+ * 기본 생성자에서 super(); 상속받은 클래스 기본생성자 호출
+ */
+
+
+public class BusinessMan {
+	protected String name;//상속받는 클래스에서 접근 허용
+	BusinessMan(){
+		System.out.println("비지니스맨 생성자");
+	}
+	public void tellName(){
+		System.out.println("name: "+name);
+	}
+
+}
+
+public class Man extends BusinessMan{
+	private String company;
+	private String position;
+	Man(){
+		super();
+		System.out.println("맨 생성자");
+	}//생략가능
+	Man(String company,String position, String name){
+		this.company=company;
+		this.position=position;
+		super.name=name;
+	}
+	public void tellYourInfo(){
+		System.out.println("company "+company);
+		System.out.println("position "+position);
+		tellName();
+	}
+	public static void main(String[] args) {
+		Man man = new Man("유니텍","개발팀","홍길동");
+		man.tellYourInfo();
+		Man man2= new Man();
+		man2.tellYourInfo();
+		
+	}
+}
+비지니스맨 생성자
+company 유니텍
+position 개발팀
+name: 홍길동
+비지니스맨 생성자
+맨 생성자
+company null
+position null
+name: null
+
+
+
+
+
+class AAA{
+	AAA(){ 
+		System.out.println("AAA생성자");}
+}
+class BBB extends AAA{
+	BBB(){
+		System.out.println("BBB생성자");}
+}
+class CCC extends BBB{
+	CCC(){
+		super();//생략가능
+		System.out.println("CCC생성자");}
+}
+public class Ex02 {
+	Ex02(){
+		CCC ccc= new CCC();
+	}
+	public static void main(String[] args) {
+		new Ex02();
+	}
+
+}
+
+AAA생성자
+BBB생성자
+CCC생성자
+
+
+class SuperCls{
+	SuperCls(){System.out.println("부모기본생성자");}
+	SuperCls(int a){System.out.println("부모a= "+a);}
+	SuperCls(int a , int b){
+		System.out.println("부모a= "+a);
+		System.out.println("부모b= "+b);
+		}
+	
+}
+class SubCls extends SuperCls{
+	SubCls(){
+		System.out.println("자식기본생성자");
+	}
+	SubCls(int a){
+		System.out.println("a= "+a);
+	}
+	SubCls(int a, int b){
+		System.out.println("a= "+ a);
+		System.out.println("b= "+ b);
+	}
+	
+}
+public class Ex03 {
+	public static void main(String[] args) {
+		new SubCls();
+		new SubCls(10);
+		new SubCls(10,20);
+		
+	}
+
+}
+
+부모기본생성자
+자식기본생성자
+부모기본생성자
+a= 10
+부모기본생성자
+a= 10
+b= 20
+
+------------------------------------------------------------------------------
+class SuperCls{
+	SuperCls(){System.out.println("부모기본생성자");}
+	SuperCls(int a){System.out.println("부모a= "+a);}
+	SuperCls(int a , int b){
+		System.out.println("부모a= "+a);
+		System.out.println("부모b= "+b);
+		}
+	
+}
+//@data,@contsurctor
+
+class SubCls extends SuperCls{
+	SubCls(){
+		super();
+		System.out.println("자식기본생성자");
+	}
+	SubCls(int a){
+		super(a);
+		System.out.println("a= "+a);
+	}
+	SubCls(int a, int b){
+		super(a,b);
+		System.out.println("a= "+ a);
+		System.out.println("b= "+ b);
+	}
+	
+}
+public class Ex03 {
+	public static void main(String[] args) {
+		new SubCls();
+		new SubCls(10);
+		new SubCls(10,20);
+		
+	}
+
+}
+부모기본생성자
+자식기본생성자
+부모a= 10
+a= 10
+부모a= 10
+부모b= 20
+a= 10
+b= 20
+
+
+public class BusinessMan {
+	protected String name;//상속받는 클래스에서 접근 허용
+	public BusinessMan(){
+		System.out.println("비지니스맨 생성자");
+	}
+	public BusinessMan(String name){
+		super();
+		this.name=name;
+	}
+	public void tellName(){
+		System.out.println("name: "+name);
+	}
+
+}
+
+public class Man extends BusinessMan{
+	private String company;
+	private String position;
+	Man(){
+		super();
+		System.out.println("맨 생성자");
+	}//생략가능
+	Man(String company,String position, String name){
+		super(name);
+		this.company=company;
+		this.position=position;
+//		this.name=name; //super.name=name;
+		
+	}
+	public void tellYourInfo(){
+		System.out.println("company "+company);
+		System.out.println("position "+position);
+		tellName();
+	}
+	public static void main(String[] args) {
+		Man man = new Man("유니텍","개발팀","홍길동");
+		man.tellYourInfo();
+	}
+}
+company 유니텍
+position 개발팀
+name: 홍길동
+
