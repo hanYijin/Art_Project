@@ -1,0 +1,525 @@
+//오버라이딩
+class Car{
+	protected String name;
+	Car(String name){
+		this.name=name;
+	}
+//	public String toString(){
+//		return "name= "+name;
+	}
+}
+class Kia extends Car{
+	private int price;
+	Kia(String name){
+		super(name);//상위클래스 생성자 호출
+	}
+	Kia(String name, int price){
+		this(name);//Kia(String name)생성자 호출
+		this.price=price;
+	}
+	public String toString(){
+		return "name= "+name+"price= "+price;
+	}
+}
+public class Ex01 {
+	public static void main(String[] args) {
+		Kia k=new Kia("스포티지",2000);
+		System.out.println(k);
+//		Car k2=new Kia("k7",3000);
+//		k2.toString();
+	}
+}
+-----------------------------------------------------------------------------------
+//오버라이딩
+class Car{
+	protected String name;
+	Car(String name){
+		this.name=name;
+	}
+	public String toString(){
+		return "name= "+name;
+	}
+
+}
+class Kia extends Car{
+	private int price;
+	Kia(String name){
+		super(name);//상위클래스 생성자 호출
+	}
+	Kia(String name, int price){
+		this(name);//Kia(String name)생성자 호출
+		this.price=price;
+	}
+	public String toString(){
+		return "name= "+name+"price= "+price;
+	}
+}
+public class Ex01 {
+	public static void main(String[] args) {
+		Kia k=new Kia("스포티지",2000);
+		System.out.println(k);
+		Car k2=new Kia("k7");
+		System.out.println(k2);
+		Car c =new Car("자네실수");
+		System.out.println(c);
+	}
+}
+
+name= 스포티지price= 2000
+name= k7price= 0
+name= 자네실수
+_______________________________________________________________
+class MobliePhone{
+	protected String number;
+	public MobliePhone(String number){
+		this.number=number;
+	}
+	public void answer(){
+		System.out.println("전화번호: "+number);
+	}
+}
+class APhone extends MobliePhone{
+	APhone(String number){
+		super(number);
+	}
+}
+class SmartPhone extends MobliePhone{
+	private String ver;
+	public SmartPhone(String number, String ver) {
+		super(number);
+		this.ver=ver;
+	}
+	public void verCheck(){
+		System.out.println("ver: "+ver);
+	}
+
+	public static void main(String[] args) {
+		SmartPhone sp =new SmartPhone("버전 8.0","010-9982-7993");
+		sp.answer();
+		sp.verCheck();
+		
+		MobliePhone mp=new SmartPhone("버전 7.5","010-2955-7993");
+		mp.answer();
+//		mp.verCheck();
+		SmartPhone sp2= (SmartPhone)mp;//명식적 형변환
+		sp2.verCheck();
+	}
+}
+전화번호: 버전 8.0
+ver: 010-9982-7993
+전화번호: 버전 7.5
+ver: 010-2955-7993
+________________________________________________________________________________________________
+import java.util.MissingFormatArgumentException;
+
+class A extends Object{ //java.lang.Object 모든 클래스의 최상위 클래스
+	
+}
+class B{
+	
+}
+public class Ex02 {
+	public static void main(String[] args) {
+		A a =new A();
+		System.out.println(a);
+		
+		B b =new B();
+		System.out.println(b);
+		
+		Object abj1= new A();
+		Object abj2=new B();
+		
+		Object c[]={new A(), new A(), new B()};
+		
+		for(int i=0; i<c.length;i++){
+			System.out.println(c[i]);
+		}
+	}
+
+}
+A@7852e922
+B@4e25154f
+A@70dea4e
+A@5c647e05
+B@33909752
+
+import java.util.MissingFormatArgumentException;
+
+/*
+ * 생략가능
+ * extends Object 최상위 클래스 
+ * toString 생략
+ * 자식 클래스 생성시 부모클래스 참조변수 가능
+ * super(): 상위클래스 생성자 호출
+ *      super(파라메터)
+ * this():현재클래스 생성자 호출
+ *     this(
+ */
+import java.util.MissingFormatArgumentException;
+
+class A extends Object{ //java.lang.Object 모든 클래스의 최상위 클래스
+	public void doA(){ 
+		System.out.println("A");
+	}
+}
+class B{
+	public void doB(){
+		System.out.println("B");
+	}
+}
+class C extends B{
+	
+}
+
+public class Ex02 {
+	public static void main(String[] args) {
+		A a =new A();
+		System.out.println(a);
+		
+		B b =new B();
+		System.out.println(b);
+		
+		B b2 = new C();
+		
+		Object abj1= new A();
+		Object abj2=new B();
+		
+		Object c[]={new A(), new A(), new B()};
+		
+		for(int i=0; i<c.length;i++){
+			System.out.println(c[i]);
+			if(c[i] instanceof A){
+				A ina = (A)c[i];
+			ina.doA();
+			}
+			if(c[i] instanceof B){
+				B ina = (B) c[i];
+				ina.doB();
+			}
+		}
+	}
+
+}
+
+A@7852e922
+B@4e25154f
+A@70dea4e
+A
+A@5c647e05
+A
+B@33909752
+B
+------------------------------------------------------------------------
+/*
+ * 생략가능
+ * extends Object 최상위 클래스 
+ * toString 생략
+ * 자식 클래스 생성시 부모클래스 참조변수 가능
+ * super(): 상위클래스 생성자 호출
+ *      super(파라메터)
+ * this():현재클래스 생성자 호출
+ *     this(
+ */
+import java.util.MissingFormatArgumentException;
+
+class A extends Object{ //java.lang.Object 모든 클래스의 최상위 클래스
+	public void doA(){ 
+		System.out.println("A");
+	}
+	public String toString(){
+		return "class A";
+	}
+}
+class B{
+	public void doB(){
+		System.out.println("B");
+	}
+	public String toString(){
+		return "class B";
+	}
+}
+class C extends B{
+	public String toString(){
+		return "class C";
+	}
+	
+}
+
+public class Ex02 {
+	public static void main(String[] args) {
+		A a =new A();
+		System.out.println(a);
+		
+		B b =new B();
+		System.out.println(b);
+		
+		B b2 = new C();
+		
+		Object abj1= new A();
+		Object abj2=new B();
+		
+		Object c[]={new A(), new A(), new B()};
+		/*
+		 * Object c[0]= new A();
+		 * Object c[1]= new A();
+		 * Object c[2]= new B();
+		 */
+		
+		for(int i=0; i<c.length;i++){
+			System.out.println(c[i]);
+			if(c[i] instanceof A){
+				A ina = (A)c[i];
+			ina.doA();
+			}
+			if(c[i] instanceof B){
+				B ina = (B) c[i];
+				ina.doB();
+			}
+		}
+	}
+
+}
+class A
+class B
+class A
+A
+class A
+A
+class B
+B
+
+
+/*
+ * 생략가능
+ * extends Object 최상위 클래스 
+ * toString 생략
+ * 자식 클래스 생성시 부모클래스 참조변수 가능
+ * super(): 상위클래스 생성자 호출
+ *      super(파라메터)
+ * this():현재클래스 생성자 호출
+ *     this(
+ */
+
+public class Cake{
+	public void yummy(){
+		System.out.println("Cake!");
+	}
+}
+public class CheeseCake extends Cake{
+	public void yummy(){
+		super.yummy();//부모클래스 메소드 호출
+		System.out.println("CheeseCake!");
+	}
+	public void doA(){
+		super.yummy();//부모 클래스 호출
+		System.out.println("doA함수");
+		yummy();//자신의 클래스 메소드 호출
+	}
+}
+
+public class Ex03 {
+	public static void main(String[] args) {
+		Cake cakes[]={new Cake(), new CheeseCake(),new Cake()};
+		for(int i=0;i<cakes.length;i++){
+			cakes[i].yummy();
+		}
+		System.out.println();
+		Cake cake1=new CheeseCake();
+		cake1.yummy();
+		
+		CheeseCake cc1= new CheeseCake();
+		cc1.doA();
+	}
+
+}
+Cake!
+CheeseCake!
+Cake!
+
+Cake!
+CheeseCake!
+Cake!
+doA함수
+Cake!
+CheeseCake!
+_______________________________________________________________________________________________
+class AAA{
+	int a =10;
+	public void method(){
+		System.out.println("A method");
+	}
+}
+class BBB extends AAA{
+	int a =20;
+	public void method(){
+		System.out.println("B method");
+	}
+}
+public class Ex04 {
+	public static void main(String[] args) {
+		AAA aa= new AAA();
+		BBB bb = new BBB();
+		aa.method();
+		bb.method();
+		
+		System.out.println("aa.a= "+aa.a);
+		System.out.println("bb.a= "+bb.a);
+		System.out.println();
+		AAA abb= new BBB();
+		abb.method();
+		
+		System.out.println("abb.a= "+ abb.a);
+	}
+
+}
+A method
+B method
+aa.a= 10
+bb.a= 20
+
+B method
+abb.a= 10
+
+문제풀이
+class Car{
+	int gasolineGauge;
+	public Car(int gasol){
+		gasolineGauge=gasol;
+	}
+}
+class HybridCar extends Car{
+	int electricGauge;
+	public HybridCar(int gasol, int elect){
+		super(gasol);
+		electricGauge=elect;
+	}
+}
+class HybridWaterCar extends HybridCar {
+	int waterGauge;
+	public HybridWaterCar(int gasol, int elect, int water){
+		super(gasol,elect);
+		waterGauge=water;
+	}
+	public void showCurrentGauge(){
+		System.out.println("잔여 가솔린: "+ gasolineGauge);
+		System.out.println("잔여 전기량: "+ electricGauge);
+		System.out.println("잔여 워터량: "+waterGauge);
+	}
+	
+}
+class Main{
+	public static void main(String[] args) {
+		HybridWaterCar car= new HybridWaterCar(100,200,300);
+		car.showCurrentGauge();
+	}
+}
+잔여 가솔린: 100
+잔여 전기량: 200
+잔여 워터량: 300
+_________________________________________________________________________________________
+15-1
+
+class Box{
+	public void wrap(){
+		System.out.println("simple wrapping");
+	}
+}
+class PaperBox extends Box{
+	public void wrap(){
+		System.out.println("paper wrapping");
+	}
+}
+class GoldBox extends PaperBox{
+	public void wrap(){
+		System.out.println("Gold wrapping");
+	}
+}
+public class Wrapping {
+	public static void main(String[] args) {
+		Box b1=new Box();
+		PaperBox b2= new PaperBox();
+		GoldBox b3 = new GoldBox();
+		
+		wrapBox(b1);
+		wrapBox(b2);	
+		wrapBox(b3);
+	}
+	public static void wrapBox(Box box){
+		box.wrap();
+	}
+
+}
+simple wrapping
+paper wrapping
+Gold wrapping
+
+___________________________________________________________________________________
+
+public class Friend {
+	protected String name;
+	protected String number;
+	public Friend(String name, String number){
+		super();
+		this.name=name;
+		this.number=number;
+	}
+
+}
+
+public class UniFriend extends Friend {
+	String major;
+	public UniFriend(String name, String number, String major) {
+		super(name, number);
+		this.major=major;
+	}
+	@Override
+	public String toString(){
+		return "Unifriend major= " +major+ "name= "+ name+"number"+number;
+	}
+	
+
+}
+
+public class CompFriend extends Friend{
+	String depart;
+
+	public CompFriend(String name, String number, String depart) {
+		super(name, number);
+		this.depart=depart;
+	}
+	@Override
+	public String toString(){
+		return "Compfriend depart= " +depart+ "name= "+ name+"number"+number;
+	}
+	
+
+}
+
+public class Managar {
+	public static void main(String[] args) {
+		Friend[] fri =new Friend[10];
+		fri[0]=new UniFriend("대학교친구1","010293930","컴퓨터공학");
+		fri[1]=new UniFriend("대학교친구2","010233330","전자공학");
+		fri[2]=new CompFriend("직장친구1","010232230","개발1팀");
+		fri[3]=new CompFriend("직장친구2","01099930","개발2팀");
+		
+		for(int i=0; i<fri.length;i++){
+			System.out.println("fri["+i+"]"+fri[i]);
+		}
+	}
+
+}
+fri[0]Unifriend major= 컴퓨터공학name= 대학교친구1number010293930
+fri[1]Unifriend major= 전자공학name= 대학교친구2number010233330
+fri[2]Compfriend depart= 개발1팀name= 직장친구1number010232230
+fri[3]Compfriend depart= 개발2팀name= 직장친구2number01099930
+fri[4]null
+fri[5]null
+fri[6]null
+fri[7]null
+fri[8]null
+fri[9]null
+
+
+
+
