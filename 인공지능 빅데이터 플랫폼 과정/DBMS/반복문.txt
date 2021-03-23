@@ -1,0 +1,37 @@
+DECLARE
+    inum   NUMBER(4);
+    idx  NUMBER(4);
+BEGIN
+    idx := 1;
+    select sum(COUNT(seq)) into inum FROM
+            lotto
+        GROUP BY
+            seq; 
+--    inum := (
+--        SELECT
+--            sum(COUNT(seq))
+--            FROM
+--            lotto
+--        GROUP BY
+--            seq
+--    ) ;
+    WHILE idx <= inum
+    LOOP
+    
+        UPDATE lotto
+        SET
+            year = (
+                SELECT
+                    cast(substr(resultdate, 1, 4) as number(4))
+                FROM
+                    lotto
+                where
+                 seq=idx
+            )
+        WHERE
+            seq = idx;
+
+        idx := idx + 1;
+    END LOOP;
+
+END;

@@ -1,0 +1,30 @@
+
+
+
+declare
+   
+    s_year number(10);
+    val number(10);
+    value_s number(5);
+begin
+   
+    select max(year) into s_year from lotto;
+    select seq into value_s from lotto where year = s_year;
+    val := s_year;
+   
+        while value_s > 0
+            loop
+            select year into s_year from lotto where seq = value_s;
+
+            if s_year is null then  
+                update lotto set year = val+1 where seq = value_s;
+               
+            elsif s_year is not null then
+                val := val -1;
+           
+            end if;
+            value_s := value_s-1;
+            end loop;
+       
+end;
+
