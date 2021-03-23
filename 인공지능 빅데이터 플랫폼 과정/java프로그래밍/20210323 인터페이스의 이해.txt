@@ -1,0 +1,500 @@
+interface A{
+	public void doA(String a);
+}
+public class Ex01 implements A {//인터페이스 A 를 클래스 Ex01에서 구현하겠다
+	public static void main(String[] args) {
+		Ex01 ex01= new Ex01();
+		ex01.doA("test");
+		
+//		A a1 =new A();
+		A a =new A(){
+			public void doA(String s){
+				
+			}
+		};
+		A a2 = (s)->{};// a2 객체안에 메소드 기능만 
+	}
+	@Override
+	public void doA(String a){
+		System.out.println(a);
+		System.out.println("doA 메소드입니다.");
+	}
+}
+
+test
+doA 메소드입니다.
+---------------------------------------------------------------------------------------------
+interface A{
+	public void doA(String a);
+}
+public class Ex01 implements A {//인터페이스 A 를 클래스 Ex01에서 구현하겠다
+	public static void main(String[] args) {
+		Ex01 ex01= new Ex01();
+		ex01.doA("test");
+		A a3=new Ex01();
+		a3.doA("인터페이스 참조변수, 클래스의 인스턴스를 참조 중");
+		
+//		A a1 =new A();
+		String s="this";
+		A a =new A(){
+			public void doA(String s){
+				System.out.println(s);
+				System.out.println("인페이스 이름으로 구현, 메소드입니다.");
+				
+			}
+		};
+		
+		a.doA("나는 인터페이스 이름으로 구현");
+		A a2 = (b)->{
+			System.out.println(b);
+			System.out.println("람다함수입니다.");
+			};
+			a2.doA("람다함수");
+	}
+	@Override
+	public void doA(String a){
+		System.out.println(a);
+		System.out.println("doA 메소드입니다.");
+	}
+}
+test
+doA 메소드입니다.
+인터페이스 참조변수, 클래스의 인스턴스를 참조 중
+doA 메소드입니다.
+나는 인터페이스 이름으로 구현
+인페이스 이름으로 구현, 메소드입니다.
+람다함수
+람다함수입니다.
+______________________________________________________________________________________________________________
+
+
+interface AA{
+	public static final int a=10;
+	public void doA();
+}
+interface BB{
+	int b=20; //public static final int b=20; 생략 가능
+	public void doB();
+}
+public class Ex02 implements AA, BB {
+	Ex02(){
+		
+		doA();
+		doB();
+	}
+	public static void main(String[] args) {
+		new Ex02();
+		
+	}
+	@Override
+	public void doB(){
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+	}
+	@Override 
+	public void doA(){
+		System.out.println("a= "+ a);
+		System.out.println("b= "+ b);
+
+	}
+}
+
+a= 10
+b= 20
+a= 10
+b= 20
+----------------------------------------------------------------------------
+interface AA{
+	public static final int a=10;
+	public void doA();
+}
+interface BB{
+	int b=20; //public static final int b=20; 생략 가능
+	public void doB();
+}
+public class Ex02 implements AA, BB {
+//	Ex02(){
+//		
+//		doA();
+//		doB();
+//	}
+	public static void main(String[] args) {
+		AA aa =new Ex02();
+		aa.doA();
+		System.out.println();
+		BB bb =new Ex02();
+		bb.doB();
+		
+//		BB b2=new BB(); // 인터페이스로 인스턴스를 생성 할 수 없다 
+		//그러므로 클래스에서 구현하여 인스턴스를 생성하여 접근함.
+	}
+	@Override
+	public void doB(){
+		System.out.println("a= "+a);
+		System.out.println("b= "+b);
+	}
+	@Override 
+	public void doA(){
+		System.out.println("a= "+ a);
+		System.out.println("b= "+ b);
+
+	}
+}
+
+a= 10
+b= 20
+
+a= 10
+b= 20
+___________________________________________________________________________
+interface Printable{
+	public void print(String doc);
+}
+class SPrinter implements Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("samsung printer....");
+		System.out.println(doc);
+		
+	}
+}
+class LPrinter implements Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("LG printer....");
+		System.out.println(doc);
+	}
+}
+public class MainPrinter {
+	public static void main(String[] args) {
+		SPrinter sp= new SPrinter();
+		sp.print("this is...");
+		System.out.println();
+		LPrinter lp=new LPrinter();
+		lp.print("this is....");
+		
+		System.out.println();
+		Printable ap=(doc)->{// 람다함수
+			
+		//람다함수: 익명함수를 지칭, 함수를 보다 단순하게 표현하는 방법
+		//(매개변수)->{함수몸체};
+			System.out.println("만들면서 정의되는 함수");
+			System.out.println("doc= "+doc);
+		};
+		ap.print("this is report...");
+			
+	}
+}
+samsung printer....
+this is...
+
+LG printer....
+this is....
+
+만들면서 정의되는 함수
+doc= this is report...
+____________________________________________________________________________________________________
+interface Printable{
+	public void print(String doc);
+}
+class SPrinter implements Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("samsung printer....");
+		System.out.println(doc);
+		
+	}
+}
+class LPrinter implements Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("LG printer....");
+		System.out.println(doc);
+	}
+}
+public class MainPrinter extends SPrinter {
+	public static void main(String[] args) {
+		SPrinter sp= new SPrinter();
+		sp.print("this is...");
+		System.out.println();
+		LPrinter lp=new LPrinter();
+		lp.print("this is....");
+		System.out.println();
+		
+		SPrinter s= new MainPrinter();
+		s.print("삼성프린터 상속받음");
+		
+		System.out.println();
+		Printable ap=(doc)->{// 람다함수
+			//람다함수: 익명함수를 지칭, 함수를 보다 단순하게 표현하는 방법
+			//(매개변수)->{함수몸체};
+			System.out.println("만들면서 정의되는 함수");
+			System.out.println("doc= "+doc);
+		};
+		ap.print("this is report...");
+			
+	}
+}
+samsung printer....
+this is...
+
+LG printer....
+this is....
+
+samsung printer....
+삼성프린터 상속받음
+
+만들면서 정의되는 함수
+doc= this is report...
+_________________________________________________________________________________________________________________
+
+interface Printable{
+	public void print(String doc);
+}
+interface ColorPrintable extends Printable{
+	public void printCMYK(String doc);
+}
+class VUpSPrinter implements ColorPrintable{
+	@Override
+	public void print(String doc){
+		System.out.println("old printer....");
+		System.out.println(doc);
+	}
+	@Override
+	public void printCMYK(String doc){
+		System.out.println("new color printer....");
+		System.out.println(doc);
+	}
+}
+class SPrinter implements Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("samsung printer....");
+		System.out.println(doc);
+		
+	}
+}
+class LPrinter implements Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("LG printer....");
+		System.out.println(doc);
+	}
+}
+public class MainPrinter{
+	public static void main(String[] args) {
+		SPrinter sp= new SPrinter();
+		sp.print("this is...");
+		System.out.println();
+		LPrinter lp=new LPrinter();
+		lp.print("this is....");
+		
+		System.out.println();
+		Printable ap=(doc)->{// 람다함수
+			//람다함수: 익명함수를 지칭, 함수를 보다 단순하게 표현하는 방법
+			//(매개변수)->{함수몸체};
+			System.out.println("만들면서 정의되는 함수");
+			System.out.println("doc= "+doc);
+		};
+		ap.print("this is report...");
+		
+		System.out.println();
+		VUpSPrinter color= new VUpSPrinter();
+		color.print("옛날");
+		color.printCMYK("칼라풀!!!");
+	}
+}
+
+interface Printable{
+	public void print(String doc);
+}
+interface ColorPrintable extends Printable{
+	public void printCMYK(String doc);
+}
+class VUpSPrinter implements ColorPrintable{
+	@Override
+	public void print(String doc){
+		System.out.println("old printer....");
+		System.out.println(doc);
+	}
+	@Override
+	public void printCMYK(String doc){
+		System.out.println("new color printer....");
+		System.out.println(doc);
+	}
+}
+class SPrinter implements Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("samsung printer....");
+		System.out.println(doc);
+		
+	}
+}
+class LPrinter implements Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("LG printer....");
+		System.out.println(doc);
+	}
+}
+public class MainPrinter{
+	public static void main(String[] args) {
+		SPrinter sp= new SPrinter();
+		sp.print("this is...");
+		System.out.println();
+		LPrinter lp=new LPrinter();
+		lp.print("this is....");
+		
+		System.out.println();
+		Printable ap=(doc)->{// 람다함수
+			//람다함수: 익명함수를 지칭, 함수를 보다 단순하게 표현하는 방법
+			//(매개변수)->{함수몸체};
+			System.out.println("만들면서 정의되는 함수");
+			System.out.println("doc= "+doc);
+		};
+		ap.print("this is report...");
+		
+		System.out.println();
+		VUpSPrinter color= new VUpSPrinter();
+		color.print("옛날");
+		color.printCMYK("칼라풀!!!");
+	}
+}
+samsung printer....
+this is...
+
+LG printer....
+this is....
+
+만들면서 정의되는 함수
+doc= this is report...
+
+old printer....
+옛날
+new color printer....
+칼라풀!!!
+______________________________________________________________________________________________________
+//인터페이스 default 메소드 추가
+interface Printable{
+	public void print(String doc);
+//	public void printA(string doc);
+	default public void printCMYK(String doc){
+		System.out.println("new default printer");
+		System.out.println(doc);
+	}
+}
+interface ColorPrintable extends Printable{
+	public void printCMYK(String doc);
+}
+class VUpSPrinter implements ColorPrintable{
+	@Override
+	public void print(String doc){
+		System.out.println("old printer....");
+		System.out.println(doc);
+	}
+	@Override
+	public void printCMYK(String doc){
+		System.out.println("new color printer....");
+		System.out.println(doc);
+	}
+}
+class SPrinter implements Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("samsung printer....");
+		System.out.println(doc);
+		
+	}
+	
+}
+class LPrinter implements Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("LG printer....");
+		System.out.println(doc);
+	}
+}
+public class MainPrinter{
+	public static void main(String[] args) {
+		SPrinter sp= new SPrinter();
+		sp.print("this is...");
+		sp.printCMYK("defalut 칼라추가");
+		System.out.println();
+		LPrinter lp=new LPrinter();
+		lp.print("this is....");
+		lp.printCMYK("칼라추가");
+		
+		System.out.println();
+		Printable ap=(doc)->{// 람다함수
+			//람다함수: 익명함수를 지칭, 함수를 보다 단순하게 표현하는 방법
+			//(매개변수)->{함수몸체};
+			System.out.println("만들면서 정의되는 함수");
+			System.out.println("doc= "+doc);
+		};
+		ap.print("this is report...");
+		
+		System.out.println();
+		VUpSPrinter color= new VUpSPrinter();
+		color.print("옛날");
+		color.printCMYK("칼라풀!!!");
+	}
+}
+
+
+samsung printer....
+this is...
+new default printer
+defalut 칼라추가
+
+LG printer....
+this is....
+new default printer
+칼라추가
+
+만들면서 정의되는 함수
+doc= this is report...
+
+old printer....
+옛날
+new color printer....
+칼라풀!!!
+______________________________________________________________________________________________________
+package aa.bb;
+
+public interface Printable {
+	public void print(String doc);
+}
+
+
+class Sprin implements aa.bb.Printable{
+	@Override
+	public void print(String doc){
+		System.out.println("Sprin");
+		System.out.println(doc);
+	}
+}
+class Mprin extends Sprin{
+	@Override
+	public void print(String doc){
+		System.out.println("Mprin");
+		System.out.println(doc);
+	}
+}
+public class Ex04 {
+	public static void main(String[] args) {
+		aa.bb.Printable prin1= new Sprin();
+		aa.bb.Printable prin2= new Mprin();
+		
+		if(prin1 instanceof aa.bb.Printable)
+			prin1.print("부모객체에 담을 수 있다. 재정의된 함수 print호출");
+		if(prin2 instanceof aa.bb.Printable)
+			prin2.print("부모객체에 담을 수 있다. 재정의된 함수 print호출");
+	}
+
+}
+//Printable-> Sprin -> Mprin
+Sprin
+부모객체에 담을 수 있다. 재정의된 함수 print호출
+Mprin
+부모객체에 담을 수 있다. 재정의된 함수 print호출
