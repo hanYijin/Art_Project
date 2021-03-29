@@ -1,0 +1,486 @@
+/*
+ * 화면 구현하는 GUI -> 그래픽 사용자 도구
+ * java -> JFrame, javaFx
+ * c# ->Form -> 사용자 os가 윈도우가 많아서
+ * python -> pyQt5, matplotlib, pyplot
+ */
+import javax.swing.JFrame;
+
+public class Ex01 extends JFrame {
+//Ex01은 JFrame이다
+	Ex01(){
+		setSize(500,600);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		for(int i=0; i<10; i++)
+		{ JFrame jf= new JFrame(i+"");
+		jf.setSize(500,600);
+		jf.setVisible(true);
+		}
+	}
+	public static void main(String[] args) {
+		new Ex01();
+	}
+}
+
+_____________________________________________________________________________
+/*
+ * 화면 구현하는 GUI -> 그래픽 사용자 도구
+ * java -> JFrame, javaFx
+ * c# ->Form -> 사용자 os가 윈도우가 많아서
+ * python -> pyQt5, matplotlib, pyplot
+ */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class Ex01 extends JFrame {
+//Ex01은 JFrame이다
+	JButton btn1= new JButton("입력");
+	DataBaseManager dbm =new DataBaseManager();
+	Ex01(){
+		
+		getContentPane().setLayout(null);//버튼 꽉 채우는 거 지워라
+		
+		btn1.setBounds(20, 20, 100, 30);
+		btn1.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				System.out.println("이거는 인터페이스");
+			}
+		});
+		
+		btn1.addActionListener(dbm);
+		
+		super.add(btn1);
+		
+		setSize(500,600);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	}
+	public static void main(String[] args) {
+		new Ex01();
+	}
+}
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+//데이터베이스매니저 클래스는 액션리스너이다. is a관례
+public class DataBaseManager implements ActionListener {
+	
+	@Override
+	public void actionPerformed(ActionEvent e){
+		try{//시도해라
+			int a =1/0;
+			//oracle 연결하는 jar파일 추가확인
+			Class.forName("oracle.jdbc.driver.oracleDriver");
+		}catch(ArithmeticException ag){
+			JOptionPane.showMessageDialog(null, "0으로 나눌 수 없다.");
+	
+		}
+		catch(ClassNotFoundException cne){
+			JOptionPane.showMessageDialog(null," 크래스 없다");
+		}
+		catch(Exception exc){//하다가 예외상항이 발생하면 catch로 빠져라...
+			exc.printStackTrace();
+		}
+		System.out.println("데이터베이스매니저");
+	}
+
+}
+
+______________________________________________________________________________________________________
+import java.util.Scanner;
+
+public class Ex02 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("숫자 입력");
+		int n1= scan.nextInt();
+		
+		System.out.println("숫자입력");
+		int n2= scan.nextInt();
+		
+		System.out.println("n1/n2 = "+(n1/n2));// 예외 발생 프로그램 강제 종료
+		System.out.println("예외적인 상황 발생시 종료됨..");
+		System.out.println("이거 출력되나...");
+		
+	}
+}
+숫자 입력
+8
+숫자입력
+0
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at Ex02.main(Ex02.java:13)
+
+숫자 입력
+8
+숫자입력
+R
+Exception in thread "main" java.util.InputMismatchException
+	at java.util.Scanner.throwFor(Unknown Source)
+	at java.util.Scanner.next(Unknown Source)
+	at java.util.Scanner.nextInt(Unknown Source)
+	at java.util.Scanner.nextInt(Unknown Source)
+	at Ex02.main(Ex02.java:11)
+
+
+import java.util.Scanner;
+
+public class Ex02 {
+	public static void main(String[] args) {
+		try{
+			Scanner scan = new Scanner(System.in);
+		
+			System.out.println("숫자 입력");
+			int n1= scan.nextInt();
+		
+			System.out.println("숫자입력");
+			int n2= scan.nextInt();
+		
+			System.out.println("n1/n2 = "+(n1/n2));
+			System.out.println("예외 발생이 안되는 상항");
+			}catch(Exception e){
+				System.out.println("캐치...");
+			}
+		
+			System.out.println("예외적인 상황 발생시 종료됨..");
+			System.out.println("이거 출력되나...");
+		
+	}
+}
+
+숫자 입력
+8
+숫자입력
+0
+캐치...
+예외적인 상황 발생시 종료됨..
+이거 출력되나...
+---------------------------------------------------
+숫자 입력
+8
+숫자입력
+1
+n1/n2 = 8
+예외 발생이 안되는 상항
+예외적인 상황 발생시 종료됨..
+이거 출력되나...
+________________________________________________________________
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Ex02 {
+	public static void main(String[] args) {
+		try{
+			Scanner scan = new Scanner(System.in);
+		
+			System.out.println("숫자 입력");
+			int n1= scan.nextInt();
+		
+			System.out.println("숫자입력");
+			int n2= scan.nextInt();
+		
+			System.out.println("n1/n2 = "+(n1/n2));
+			System.out.println("예외 발생이 안되는 상항");
+			}catch(ArithmeticException | InputMismatchException e){
+				e.printStackTrace();//예외 발생한 위치, 호출된 메소드 정보 출력
+				System.out.println(e.getMessage());// 예외의 원인을 담고 있는 문자열 반환
+				System.out.println("캐치...");
+			}
+		
+			System.out.println("예외적인 상황 발생시 종료됨..");
+			System.out.println("이거 출력되나...");
+		
+	}
+}
+숫자 입력
+8
+숫자입력
+0
+java.lang.ArithmeticException: / by zero
+/ by zero
+캐치...
+예외적인 상황 발생시 종료됨..
+이거 출력되나...
+	at Ex02.main(Ex02.java:15)
+
+
+______________________________________________________________________________________________________________________
+
+public class Ex03 {
+	
+	public static void md1(){
+		int a=10;
+		int b=0;
+		System.out.println("a/b"+ a/b);
+	}
+	
+	public static void main(String[] args) {
+		md1();
+	}
+
+}
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at Ex03.md1(Ex03.java:7)
+	at Ex03.main(Ex03.java:11)
+
+--------------------------------------------------------------------------------------------------
+public class Ex03 {
+	
+	public static void md1() throws Exception {//예외처리 책임 main으로 전달함을 명시
+		int a=10;
+		int b=0;
+		System.out.println("a/b"+ a/b);
+	}
+	
+	public static void main(String[] args){
+		try {
+			md1();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}
+____________________________________________________________________________________________________
+class MyException extends Exception{
+	MyException(){
+		super("내가 만든 예외사항");
+	}
+}
+public class Ex04{
+	Ex04(){
+		try{
+			throw new MyException();
+		}catch(Exception me){
+			System.out.println(me.getMessage());
+		}
+		
+	}
+	public static void main(String[]args){
+		new Ex04();
+	}
+}
+________________________________________________________________________________________________________
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import javax.swing.JOptionPane;
+
+//데이터베이스매니저 클래스는 액션리스너이다. is a관례
+public class DataBaseManager implements ActionListener {
+	
+	@Override
+	public void actionPerformed(ActionEvent e){
+		Connection conn = null; // 데이터 베이스 연결객체
+		PreparedStatement pstmt= null;//sql문 작성
+
+		try{//시도해라
+			//oracle 연결하는 jar파일 추가확인
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","AI","1234");
+			pstmt= conn.prepareStatement("insert into atable values('1','한이진','여자','^^')");
+			pstmt.executeUpdate(); // 실행이 됨, 예외 발생 지점
+			
+		}catch(ArithmeticException ag){
+			JOptionPane.showMessageDialog(null, "0으로 나눌 수 없다.");
+	
+		}
+		catch(ClassNotFoundException cne){
+			JOptionPane.showMessageDialog(null," 클래스 없다");
+		}
+		catch(Exception exc){//하다가 예외상항이 발생하면 catch로 빠져라...
+			exc.printStackTrace();
+		}
+		System.out.println("데이터베이스매니저");
+	}
+
+}
+
+/*
+ * 화면 구현하는 GUI -> 그래픽 사용자 도구
+ * java -> JFrame, javaFx
+ * c# ->Form -> 사용자 os가 윈도우가 많아서
+ * python -> pyQt5, matplotlib, pyplot
+ */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class Ex01 extends JFrame {
+//Ex01은 JFrame이다
+	JButton btn1= new JButton("입력");
+	DataBaseManager dbm =new DataBaseManager();
+	Ex01(){
+		
+		getContentPane().setLayout(null);//버튼 꽉 채우는 거 지워라
+		
+		btn1.setBounds(20, 20, 100, 30);
+		btn1.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				System.out.println("이거는 인터페이스");
+			}
+		});
+		
+		btn1.addActionListener(dbm);
+		
+		super.add(btn1);
+		
+		setSize(500,600);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	}
+	public static void main(String[] args) {
+		new Ex01();
+	}
+}
+____________________________________________________________________________________________
+/*
+ * 화면 구현하는 GUI -> 그래픽 사용자 도구
+ * java -> JFrame, javaFx
+ * c# ->Form -> 사용자 os가 윈도우가 많아서
+ * python -> pyQt5, matplotlib, pyplot
+ */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+
+public class Ex01 extends JFrame {
+//Ex01은 JFrame이다
+	JButton btn1= new JButton("입력");
+	DataBaseManager dbm =new DataBaseManager();
+	public static JTextField tf_idx;
+	public static JTextField tf_name;
+	public static JTextField tf_gender;
+	public static JTextField tf_remark;
+	Ex01(){
+		
+		getContentPane().setLayout(null);//버튼 꽉 채우는 거 지워라
+		
+		JLabel lblNewLabel = new JLabel("IDX");
+		lblNewLabel.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblNewLabel.setBounds(27, 23, 57, 15);
+		getContentPane().add(lblNewLabel);
+		
+		JLabel lblName = new JLabel("NAME");
+		lblName.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblName.setBounds(27, 48, 57, 15);
+		getContentPane().add(lblName);
+		
+		JLabel lblGender = new JLabel("GENDER");
+		lblGender.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblGender.setBounds(27, 74, 57, 15);
+		getContentPane().add(lblGender);
+		
+		JLabel lblRemark = new JLabel("REMARK");
+		lblRemark.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblRemark.setBounds(27, 99, 57, 15);
+		getContentPane().add(lblRemark);
+		
+		tf_idx = new JTextField();
+		tf_idx.setFont(new Font("Consolas", Font.BOLD, 12));
+		tf_idx.setBounds(96, 21, 116, 21);
+		getContentPane().add(tf_idx);
+		tf_idx.setColumns(10);
+		
+		tf_name = new JTextField();
+		tf_name.setFont(new Font("Consolas", Font.BOLD, 12));
+		tf_name.setColumns(10);
+		tf_name.setBounds(96, 46, 116, 21);
+		getContentPane().add(tf_name);
+		
+		tf_gender = new JTextField();
+		tf_gender.setFont(new Font("Consolas", Font.BOLD, 12));
+		tf_gender.setColumns(10);
+		tf_gender.setBounds(96, 72, 116, 21);
+		getContentPane().add(tf_gender);
+		
+		tf_remark = new JTextField();
+		tf_remark.setFont(new Font("Consolas", Font.BOLD, 12));
+		tf_remark.setColumns(10);
+		tf_remark.setBounds(96, 97, 116, 21);
+		getContentPane().add(tf_remark);
+		
+		btn1.setBounds(234, 90, 100, 30);
+		btn1.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				System.out.println("이거는 인터페이스");
+			}
+		});
+		
+		btn1.addActionListener(dbm);
+		
+		super.add(btn1);
+		
+		setSize(500,600);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	}
+	public static void main(String[] args) {
+		new Ex01();
+	}
+}
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import javax.swing.JOptionPane;
+
+//데이터베이스매니저 클래스는 액션리스너이다. is a관례
+public class DataBaseManager implements ActionListener {
+	
+	@Override
+	public void actionPerformed(ActionEvent e){
+		Connection conn = null; // 데이터 베이스 연결객체
+		PreparedStatement pstmt= null;
+		try{//시도해라
+			//oracle 연결하는 jar파일 추가확인
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","AI","1234");
+			pstmt= conn.prepareStatement("insert into atable values(?,?,?,?)");
+			pstmt.setInt(1, Integer.parseInt(Ex01.tf_idx.getText()));
+			pstmt.setString(2, Ex01.tf_name.getText());
+			pstmt.setString(3, Ex01.tf_gender.getText());
+			pstmt.setString(4, Ex01.tf_remark.getText());
+			pstmt.executeUpdate();
+			
+		}catch(ArithmeticException ag){
+			JOptionPane.showMessageDialog(null, "0으로 나눌 수 없다.");
+	
+		}
+		catch(ClassNotFoundException cne){
+			JOptionPane.showMessageDialog(null," 클래스 없다");
+		}
+		catch(Exception exc){//하다가 예외상항이 발생하면 catch로 빠져라...
+			exc.printStackTrace();
+		}
+		System.out.println("데이터베이스매니저");
+	}
+
+}
