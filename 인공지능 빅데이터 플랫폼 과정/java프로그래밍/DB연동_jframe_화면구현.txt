@@ -1,0 +1,167 @@
+import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+/*
+ * 화면 구현 하는 GUI -> 그래픽 사용자 도구
+ * 
+ * java -> jframe, javaFx 망했어요...
+ * c# -> Form -> 사용자 OS -> 윈도우..
+ * python -> pyQt5, matplotlib.pyplot
+ * 
+ */
+public class Ex01 extends JFrame{
+	
+	JButton btn1 = new JButton("입력");
+	DataBaseManager dbm = new DataBaseManager();
+	public static JTextField tf_idx;
+	public static JTextField tf_name;
+	public static JTextField tf_gender;
+	public static JTextField tf_remark;
+	
+	// Ex01 은 JFrame 이다
+	Ex01(){
+		getContentPane().setLayout(null); // 버튼 꽉 차는 거 지워라..
+		
+		JLabel lblNewLabel = new JLabel("IDX");
+		lblNewLabel.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblNewLabel.setBounds(12, 27, 67, 24);
+		getContentPane().add(lblNewLabel);
+		
+		JLabel lblName = new JLabel("NAME");
+		lblName.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblName.setBounds(12, 61, 67, 24);
+		getContentPane().add(lblName);
+		
+		JLabel lblGender = new JLabel("GENDER");
+		lblGender.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblGender.setBounds(12, 95, 67, 24);
+		getContentPane().add(lblGender);
+		
+		JLabel lblRemark = new JLabel("REMARK");
+		lblRemark.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblRemark.setBounds(12, 129, 67, 24);
+		getContentPane().add(lblRemark);
+		
+		tf_idx = new JTextField();
+		tf_idx.setFont(new Font("Consolas", Font.BOLD, 14));
+		tf_idx.setBounds(91, 28, 124, 23);
+		getContentPane().add(tf_idx);
+		tf_idx.setColumns(10);
+		
+		tf_name = new JTextField();
+		tf_name.setFont(new Font("Consolas", Font.BOLD, 14));
+		tf_name.setColumns(10);
+		tf_name.setBounds(91, 62, 124, 23);
+		getContentPane().add(tf_name);
+		
+		tf_gender = new JTextField();
+		tf_gender.setFont(new Font("Consolas", Font.BOLD, 14));
+		tf_gender.setColumns(10);
+		tf_gender.setBounds(91, 96, 124, 23);
+		getContentPane().add(tf_gender);
+		
+		tf_remark = new JTextField();
+		tf_remark.setFont(new Font("Consolas", Font.BOLD, 14));
+		tf_remark.setColumns(10);
+		tf_remark.setBounds(91, 130, 124, 23);
+		getContentPane().add(tf_remark);
+		
+		btn1.setBounds(238, 125, 100, 30);
+//		btn1.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				System.out.println("이거는 인터페이스");
+//			}
+//		});
+//		
+//		btn1.addActionListener((e)->{ System.out.println("랃다..."); } );
+		btn1.addActionListener(dbm);
+		
+		super.add(btn1);
+		
+		setSize(500,600);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+//		for(int i=0; i< 10; i++)
+//		{
+//			JFrame jf = new JFrame(i+"");
+//			jf.setSize(500,600);
+//			jf.setVisible(true);
+//		}
+	}
+	
+	public static void main(String[] args) {
+		new Ex01();
+	}
+}
+
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import javax.swing.JOptionPane;
+
+// 데이터베이스매니저클래스는 액션리스너이다..is a 관계 성립..
+public class DataBaseManager implements ActionListener{
+	
+//	try :
+//	except Exception as e:
+//		print(e)
+//	finally:
+	
+//  form 참조... 메뉴오른쪽.. 
+//  jar 라이브러리.. add jar
+//  pip install selenium
+//  ctrl + shift + o
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Connection conn = null; // 데이터베이스 연결객체
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			conn = DriverManager
+					.getConnection("jdbc:oracle:thin:@192.168.0.111:1521:xe",
+							"AI", "1234");
+			pstmt = conn.prepareStatement("insert into atable values(?,?,?,?)");
+			pstmt.setInt(1, Integer.parseInt(Ex01.tf_idx.getText()));
+			pstmt.setString(2, Ex01.tf_name.getText());
+			pstmt.setString(3, Ex01.tf_gender.getText());
+			pstmt.setString(4, Ex01.tf_remark.getText());
+			pstmt.executeUpdate();
+			
+		}
+		catch (ArithmeticException ae) {
+			JOptionPane.showMessageDialog(null, "0으로 나눌 수 없다.");
+		}
+		catch (ClassNotFoundException cne) {
+			JOptionPane.showMessageDialog(null, "클래스 없다.");
+		}
+		// 하다가 예외상황이 발생하면 catch로 빠져라... 
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			}catch (Exception closee) {}
+		}
+		System.out.println("데이터베이스메니저..");
+	}
+
+}
+
+
+
+
+
