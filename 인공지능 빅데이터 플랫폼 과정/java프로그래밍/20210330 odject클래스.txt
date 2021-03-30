@@ -1,0 +1,210 @@
+
+//ctrl + shift +f 자동정렬
+public class Person extends Object {
+
+	String name;
+
+	Person(String name) {
+		this.name = name;
+	}
+
+	// alt + shift + s -> v
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+		System.out.println("참조관계 해체로 인한 메모리상에서 삭제");
+		System.out.println("name: "+ name);
+	}
+}
+/*
+ * 1. 메소드영역
+ *	메소드 바이트코드, static 변수
+ *	-  클래스의 정보가 메모리공간에 올려질때 채워진 영역
+ * 2. 스택영역
+ *	메소드 안의 지역변수, 매개변수
+ * 3. 힙영역
+ *	개발자가 new 예약어로 생성하는 인스턴스
+ */
+public class Ex01 {
+	public static void main(String[] args) {
+		Person p1 = new Person("로제");
+		Person p2 = new Person("제니");
+		
+		
+		System.gc();
+		System.runFinalization();
+		System.out.println("종료");
+	}
+
+}
+종료
+_____________________________________________________________________________________________________
+
+public class INum {
+	private int num;
+	private String name;  
+	public INum(int num, String name){
+		super();
+		this.num=num;
+		this.name=name;
+		
+	}
+	@Override
+	public boolean equals(Object obj){//모든 자식클래스에서 객체가 될 수 있다
+		if(this.num == ((INum)obj).num && this.name==((INum)obj).name){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+}
+
+public class Ex02 {
+	public static void main(String[] args) {
+		INum i1= new INum(10, "제니");
+		INum i2= new INum(12,"로제");
+		INum i3= new INum(10,"제니");
+		
+		if(i1.equals(i2))//false
+			System.out.println("i1과 i2은 내용이 다르다");
+		if(i1.equals(i3))//true
+			System.out.println("i1과 i3은 내용이 똑같다");
+		if(i1==i2)//참조값 비교 false
+			System.out.println("i1==i2 똑같다");
+		if(i1==i3)//참조값 비교 false
+			System.out.println("i1==i3 똑같다");
+	}
+
+}
+i1과 i3은 내용이 똑같다
+________________________________________________________________________________________
+
+public class Stringto {
+	public static void main(String[] args) {
+		String s1= new String("하하");
+		String s2 = new String("하하");
+		String s3= "하하";
+		String s4= "하하";
+		if(s1==s2)
+			System.out.println("참조 동일");
+		else
+			System.out.println("다름");
+		
+		if(s1.equals(s2))
+			System.out.println("내용동일");
+		else
+			System.out.println("내용 다름");
+		
+		if(s3==s4)
+			System.out.println("참조 동일");
+		else
+			System.out.println("다름");
+	}
+
+}
+다름
+내용동일
+참조 동일
+__________________________________________________________________________________________________
+
+public class Point {
+	public int xpos;
+	public int ypos;
+	//alt + shift + s->o
+	public Point(int xpos, int ypos) {
+		super();
+		this.xpos = xpos;
+		this.ypos = ypos;
+	}
+	// alt+ shift + s -> s 
+	@Override
+	public String toString() {
+		return "Point [xpos=" + xpos + ", ypos=" + ypos + "]";
+	}
+	
+
+}
+
+
+public class Ex04 {
+	public static void main(String[] args) {
+		Point point = new Point(3,5);
+		Point cpy= point;
+		
+		System.out.println(point);
+		System.out.println(cpy);
+		
+		point.xpos=20;
+		System.out.println("org= "+point);
+		System.out.println("cpy= "+cpy);
+		
+	}
+
+}
+Point [xpos=3, ypos=5]
+Point [xpos=3, ypos=5]
+org= Point [xpos=20, ypos=5]
+cpy= Point [xpos=20, ypos=5]
+
+
+* Point point = new Point(3,5);
+		Point cpy= new Point(3,5);
+		cpy.xpos=point.xpos;
+		cpy.ypos=point.ypos;
+		_________
+-----------------------------------------------------------------------------
+
+public class Point implements Cloneable {
+	public int xpos;
+	public int ypos;
+	//alt + shift + s->o
+	public Point(int xpos, int ypos) {
+		super();
+		this.xpos = xpos;
+		this.ypos = ypos;
+	}
+	// alt+ shift + s -> s 
+	@Override
+	public String toString() {
+		return "Point [xpos=" + xpos + ", ypos=" + ypos + "]";
+	}
+	// alt + shift +s -> v
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+	
+	
+
+
+
+public class Ex04 {
+	public static void main(String[] args) {
+		Point point = new Point(3,5);
+//		Point cpy= new Point(3,5);
+//		cpy.xpos=point.xpos;
+//		cpy.ypos=point.ypos;
+		Point cpy=null;
+		try{
+			cpy=(Point)(point.clone());
+		}catch(CloneNotSupportedException e){
+			e.printStackTrace();
+		}
+		System.out.println(point);
+		System.out.println(cpy);
+		
+		point.xpos=20;
+		System.out.println("org= "+point);
+		System.out.println("cpy= "+cpy);
+		
+	}
+
+}
+Point [xpos=3, ypos=5]
+Point [xpos=3, ypos=5]
+org= Point [xpos=20, ypos=5]
+cpy= Point [xpos=3, ypos=5]

@@ -271,7 +271,35 @@ public class Ex04{
 		new Ex04();
 	}
 }
-________________________________________________________________________________________________________
+------------------------------------------------------------------------------------------------------------
+import java.util.Scanner;
+
+class MyException extends Exception{
+	MyException(){
+		super("내가 만든 예외사항");
+	}
+}
+public class Ex04{
+	public static int doA() throws MyException {
+		Scanner s =new Scanner(System.in);
+		int a=s.nextInt();
+		if(a<0)
+			throw new MyException();
+		return a;
+	}
+	Ex04(){
+		try{
+			System.out.println(doA());
+		}catch(MyException me){
+			System.out.println(me.getMessage());
+		}
+		
+	}
+	public static void main(String[]args){
+		new Ex04();
+	}
+}
+_________________________________________________________________________________________________________
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
