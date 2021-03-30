@@ -1,0 +1,124 @@
+--학생 테이블 생성
+CREATE table STUTBL --학생테이블
+(idnum CHAR(8) primary key, --학번
+sname NVARCHAR2(10) not null, --학생이름
+sgroup nchar(4) not null,-- 학생 반 (그룹)
+sex char(2),-- 성별
+age number(2));--나이
+
+drop procedure add_STUTBL;
+--insert 프로시저
+create or replace procedure add_STUTBL
+    ( p_idnum   stutbl.idnum%type
+    ,p_sname    stutbl.sname%type
+    ,p_sgroup   stutbl.sgroup%type
+    ,p_sex      stutbl.sex%type
+    ,p_age      stutbl.age%type
+    )
+Is
+BEGIN
+    insert into stutbl (idnum, sname, sgroup, sex, age)
+    values(p_idnum, p_sname, p_sgroup, p_sex, p_age);
+    commit;
+END add_STUTBL;
+--delete 프로시저
+create or replace PROCEDURE del_STUTBL
+( p_idnum   stutbl.idnum%type)
+Is
+BEGIN
+    delete from stutbl where idnum=p_idnum;
+commit;
+END del_STUTBL;
+
+--upsate 프로시저
+create or replace procedure update_STUTBL
+(p_idnum    stutbl.idnum%type
+,p_sname    stutbl.sname%type
+,p_sgroup   stutbl.sgroup%type 
+,p_sex      stutbl.sex%type :='w/m'
+,p_age       stutbl.age%type default 0)
+Is
+BEGIN
+    update stutbl 
+    set
+    idnum = p_idnum
+    ,sname= p_sname
+    ,sgroup=p_sgroup
+    ,sex=p_sex
+    ,age=p_age
+    where idnum=p_idnum;
+    commit;
+END update_STUTBL;
+
+-- select 프로시저
+create or replace procedure select_STUTBL
+(p_idnum   in stutbl.idnum%type)
+as p_sname varchar2(10);
+begin
+    select sname into p_sname from stutbl
+        where idnum= p_idnum;
+    dbms_output.put_line(p_sname);
+END select_STUTBL;
+-- selectallcolumn 프로시저
+create or replace procedure selectall_STUTBL
+(p_cursor OUT SYS_REFCURSOR)
+is
+begin
+open p_cursor For
+select *
+From stutbl;
+--where idnum=p_idnum;
+ENd selectall_STUTBL;
+
+---- seleteinout 프로시저
+create or replace procedure selecteout_STUTBL
+(p_idnum in idnum
+,p_sname OUT sname)
+is
+begin
+select sname into p_sname
+From stutbl
+where idnum=p_idnum;
+ENd selecteout_STUTBL;
+
+--set SERVEROUTPUT on;
+--DECLARE
+--p_sname VARCHAR2(10);
+--BEGIN
+--EXECUTE selecteinout_stutbl(1);
+--DBMS_OUTPUT.PUT_LINE(p_sname);
+--End;
+_________________________________________________________________________________________________________
+view plaincopy to clipboardprint?
+// 적용 프로시져  
+CREATE OR REPLACE PROCEDURE MY_PROC(  V_NUMBER IN NUMBER,P_RC OUT SYS_REFCURSOR )  
+AS  
+BEGIN  
+    OPEN P_RC  
+    FOR SELECT 1 COL1  
+         FROM DUAL;  
+END;  
+  
+// 확인 프로시져  
+CREATE OR REPLACE FUNCTION MY_PROC_TEST(V_NUMBER IN NUMBER) RETURN SYS_REFCURSOR  
+AS  
+    P_RC SYS_REFCURSOR;  
+BEGIN  
+    MY_PROC(V_NUMBER,P_RC);  
+    RETURN P_RC;  
+END;  
+
+----------------------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE MY_PROC( P_RC OUT SYS_REFCURSOR )  
+AS  
+BEGIN  
+  OPEN P_RC  
+   FOR SELECT 1 COL1  
+         FROM DUAL;  
+END;  
+/  
+  
+VARIABLE RC REFCURSOR;  
+EXEC MY_PROC( :RC );  
+PRINT RC;  
+
